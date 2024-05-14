@@ -1,17 +1,12 @@
-@import '@angular/cdk/overlay-prebuilt.css';
+@import "@angular/cdk/overlay-prebuilt.css";
 
 /* You can add global styles to this file, and also import other style files */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--primary))
-}
-
 :root {
-  --font-sans: ''
+  --font-sans: "";
 }
 
 :root {

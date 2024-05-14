@@ -1,0 +1,9 @@
+<div class="layout-container">
+  <app-sidebar></app-sidebar>
+  <main>
+    <h1 [ngClass]="headerClass">{{ routingService.currentRoute()?.title }}</h1>
+    <hlm-scroll-area class="h-full">
+      <router-outlet></router-outlet>
+    </hlm-scroll-area>
+  </main>
+</div>

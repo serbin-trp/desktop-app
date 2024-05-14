@@ -1,0 +1,14 @@
+aside {
+  background-color: hsl(var(--primary-foreground));
+  height: 100%;
+  overflow-y: auto;
+  padding: 1rem;
+  /* Enable scrollbar if content exceeds sidebar height */
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
