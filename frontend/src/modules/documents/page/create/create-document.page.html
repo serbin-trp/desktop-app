@@ -1,0 +1,52 @@
+<form [formGroup]="createDocumentForm" (ngSubmit)="handleSubmit()" class="py-4 grid gap-4">
+  <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="contractor">Contractor </label>
+    <brn-select class="col-span-3" formControlName="contractor" placeholder="Select an contractor">
+      <hlm-select-trigger>
+        <hlm-select-value />
+      </hlm-select-trigger>
+      <hlm-select-content>
+        @for(option of clients; track option.id) {
+        <hlm-option [value]="option">{{option.details.title}}</hlm-option>
+        }
+      </hlm-select-content>
+    </brn-select>
+  </div>
+
+  <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="contractor">Executor </label>
+    <brn-select class="col-span-3 w-full" formControlName="executor" placeholder="Select an executor">
+      <hlm-select-trigger>
+        <hlm-select-value />
+      </hlm-select-trigger>
+      <hlm-select-content>
+        @for(option of clients; track option.id) {
+        <hlm-option [value]="option">{{option.details.title}}</hlm-option>
+        }
+      </hlm-select-content>
+    </brn-select>
+  </div>
+
+  <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="date">Document Date</label>
+    <input class="col-span-3" formControlName="date" id="date" hlmInput />
+  </div>
+
+  <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="title">Document Title</label>
+    <input class="col-span-3" formControlName="title" id="title" hlmInput />
+  </div>
+
+  <div formArrayName="transactions">
+    <h2 [class]="h2">Transactions</h2>
+    <button class="mt-4" hlmBtn type="button" (click)="addTransaction()">
+      + Add another transaction
+    </button>
+    @for(trx of transactions.controls; track trx) {}
+    <div class="mt-2 items-center grid grid-cols-4 gap-4" *ngFor="let trx of transactions.controls; let i=index">
+      <label hlmLabel for="trx-{{ i }}">Transaction:</label>
+      <input type="number" class="col-span-3" hlmInput id="trx-{{ i }}" type="text" [formControlName]="i" />
+    </div>
+  </div>
+  <button hlmBtn type="submit">Create</button>
+</form>

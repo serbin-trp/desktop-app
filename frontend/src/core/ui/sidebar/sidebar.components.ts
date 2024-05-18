@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { provideIcons } from '@ng-icons/core';
-import { lucideBarChart2, lucideFile } from '@ng-icons/lucide';
+import { lucideBarChart2, lucideFile, lucideLaugh } from '@ng-icons/lucide';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
@@ -18,7 +18,7 @@ type Route = SidebarRoute & { variant: 'secondary' | 'ghost' | 'default' };
   selector: 'app-sidebar',
   templateUrl: './sidebar.components.html',
   styleUrl: './sidebar.components.scss',
-  providers: [provideIcons({ lucideBarChart2, lucideFile })],
+  providers: [provideIcons({ lucideBarChart2, lucideFile, lucideLaugh })],
   imports: [HlmIconComponent, HlmButtonDirective, RouterLink, RouterLinkActive],
 })
 export class AppSidebar {
@@ -28,7 +28,7 @@ export class AppSidebar {
     return this.routes().map((r) => ({
       ...r,
       variant:
-        r.path === this.routerService.currentRoute()?.path
+        r.path === '/' + this.routerService.currentRoute()?.path
           ? 'default'
           : 'ghost',
     }));

@@ -1,9 +1,11 @@
-<div class="layout-container">
+<div class="flex h-svh">
   <app-sidebar></app-sidebar>
-  <main>
+  <main class="flex flex-col flex-grow h-full pt-4 px-8 pb-8 overflow-y-auto">
     <h1 [ngClass]="headerClass">{{ routingService.currentRoute()?.title }}</h1>
-    <hlm-scroll-area class="h-full">
-      <router-outlet></router-outlet>
+    <hlm-scroll-area class="h-full mt-4">
+      <div class="h-full w-full p-5">
+        <router-outlet></router-outlet>
+      </div>
     </hlm-scroll-area>
   </main>
 </div>

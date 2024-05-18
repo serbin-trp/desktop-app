@@ -19,6 +19,7 @@
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
     "paths": {
+      "@storage": ["./src/core/storage/index.ts"],
       "@core/*": ["./src/core/*"],
       "@utils/*": ["./src/utils/*"],
       "@wails/*": ["./wailsjs/go/*"],

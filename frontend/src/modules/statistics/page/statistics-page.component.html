@@ -1,4 +1,21 @@
-<h1>STATS</h1>
-@for (tag of tags; track tag) {
-<p>{{ tag }}</p>
-}
+<div class="grid gap-2 grid-cols-3">
+  <section hlmCard>
+    <div hlmCardHeader>
+      <h3 hlmCardTitle class="flex items-center flex-row gap-2">
+        <hlm-icon size="lg" name="lucideLaugh"></hlm-icon>Amount of registered
+        Clients
+      </h3>
+    </div>
+    <p [ngClass]="h1" hlmCardContent>{{ amountOfClient() }}</p>
+  </section>
+
+  <section hlmCard>
+    <div hlmCardHeader>
+      <h3 hlmCardTitle class="flex items-center flex-row gap-2">
+        <hlm-icon size="lg" name="lucideFile"></hlm-icon>
+        Total amount of Documents
+      </h3>
+    </div>
+    <p [ngClass]="h1" hlmCardContent>{{ amountOfDocuments() }}</p>
+  </section>
+</div>

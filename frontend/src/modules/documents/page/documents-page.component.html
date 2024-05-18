@@ -1,0 +1,51 @@
+<a hlmBtn routerLink="/documents/create">Create</a>
+
+<hlm-table class="w-full min-w-[400px]">
+  <hlm-trow>
+    <hlm-th class="flex-1">Title</hlm-th>
+    <hlm-th class="flex-1">Executor</hlm-th>
+    <hlm-th class="flex-1">Contractor</hlm-th>
+    <hlm-th class="flex-1">Date</hlm-th>
+    <hlm-th class="flex-1">Transactions Amount</hlm-th>
+    <hlm-th class="justify-end">Actions</hlm-th>
+  </hlm-trow>
+  @if (documents$ | async; as documents) {
+    @for (doc of documents; track doc.id) {
+      <hlm-trow [brnCtxMenuTriggerFor]="menu">
+        <hlm-td class="flex-1">{{ doc.title }}</hlm-td>
+        <hlm-td class="flex-1">{{ doc.executor.details.title }}</hlm-td>
+        <hlm-td class="flex-1">{{ doc.contractor.details.title }}</hlm-td>
+        <hlm-td class="flex-1">{{ doc.date }}</hlm-td>
+        <hlm-td class="flex-1">{{ trxSum(doc.transactions) + "₴" }}</hlm-td>
+
+        <hlm-td class="justify-end">
+          <button
+            hlmBtn
+            size="icon"
+            variant="outline"
+            [brnMenuTriggerFor]="menu"
+          >
+            <hlm-icon size="sm" name="lucideMoreVertical" />
+          </button>
+          <ng-template #menu>
+            <hlm-menu>
+              <hlm-menu-label>Document's actions</hlm-menu-label>
+              <hlm-menu-separator />
+              <hlm-menu-group>
+                <button hlmMenuItem (click)="generate(doc)">
+                  <hlm-icon name="lucideFileSpreadsheet" hlmMenuIcon></hlm-icon>
+                  <span>Generate PDF</span>
+                </button>
+                <hlm-menu-separator />
+                <button hlmMenuItem (click)="handleDelete(doc.id)">
+                  <hlm-icon name="lucideTrash" hlmMenuIcon />
+                  <span>Delete</span>
+                </button>
+              </hlm-menu-group>
+            </hlm-menu>
+          </ng-template>
+        </hlm-td>
+      </hlm-trow>
+    }
+  }
+</hlm-table>

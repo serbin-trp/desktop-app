@@ -8,13 +8,20 @@ export function toRouterRoutes(routes: Array<BaseRoute>): Routes {
     data: {
       name: el.title,
     },
+    children: el.children ? toRouterRoutes(el.children) : [],
   }));
 }
 
 export function toSidebarItems(routes: Array<BaseRoute>): SidebarRoute[] {
-  return routes.map((el) => ({
-    path: '/' + el.path,
-    title: el.title,
-    icon: el.icon,
-  }));
+  return routes.flatMap((el) => {
+    if (el.sidebar)
+      return [
+        {
+          path: '/' + el.path,
+          title: el.title,
+          icon: el.icon || '',
+        },
+      ];
+    else return [];
+  });
 }

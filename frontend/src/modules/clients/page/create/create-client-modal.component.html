@@ -1,0 +1,45 @@
+<hlm-dialog [state]="modalState()" (closed)="onClose()">
+  <hlm-dialog-content *brnDialogContent="let ctx">
+    <hlm-dialog-header class="w-[250px]">
+      <h3 hlmDialogTitle>Create new Customer</h3>
+      <p hlmDialogDescription>Provide client's name.</p>
+    </hlm-dialog-header>
+    <form
+      class="py-4 grid gap-4"
+      [formGroup]="createClientForm"
+      (ngSubmit)="handleSubmit()"
+    >
+      <div class="items-center grid grid-cols-4 gap-4">
+        <label hlmLabel for="lastName">Last name </label>
+        <input
+          class="col-span-3"
+          formControlName="lastName"
+          id="lastName"
+          hlmInput
+        />
+      </div>
+
+      <div class="items-center grid grid-cols-4 gap-4">
+        <label hlmLabel for="firstName">First name </label>
+        <input
+          class="col-span-3"
+          formControlName="firstName"
+          id="firstName"
+          hlmInput
+        />
+      </div>
+      <div class="items-center grid grid-cols-4 gap-4">
+        <label hlmLabel for="fathersName">Fathers name </label>
+        <input
+          class="col-span-3"
+          formControlName="fathersName"
+          if="fathersName"
+          hlmInput
+        />
+      </div>
+      <hlm-dialog-footer>
+        <button hlmBtn type="submit">Create</button>
+      </hlm-dialog-footer>
+    </form>
+  </hlm-dialog-content>
+</hlm-dialog>

@@ -2,42 +2,11 @@
   <nav>
     @for (route of sidebarRoutes(); track route.path) {
 
-    <a [routerLink]="route.path" routerLinkActive="active" hlmBtn [variant]="route.variant" class="w-full">
+    <a [routerLink]="route.path" routerLinkActive="active" hlmBtn [variant]="route.variant"
+      class="w-full !justify-start">
       <hlm-icon class="mr-2" [name]="route.icon" />
       {{route.title}}
     </a>
     }
-    <!-- <a [routerLink="/" routerLinkActive="active" hlmBtn variant="ghost" class="w-full"> -->
-    <!--   <hlm-icon class="mr-2" name="lucideBarChart2" /> -->
-    <!--   Dashboard -->
-    <!-- </a> -->
-    <!---->
-    <!-- <a hlmBtn routerLink="/documents" routerLinkActive="active" variant="secondary" class="w-full"> -->
-    <!--   <hlm-icon class="mr-2" name="lucideFile" /> -->
-    <!--   Documents -->
-    <!-- </a> -->
-
-    <!-- <ng-template #file> -->
-    <!--   <hlm-menu variant="menubar" class="w-48"> -->
-    <!--     <div brnMenuGroup> -->
-    <!--       <button hlmMenuItem> -->
-    <!--         New Tab -->
-    <!--         <hlm-menu-shortcut>⌘T</hlm-menu-shortcut> -->
-    <!--       </button> -->
-    <!--     </div> -->
-    <!---->
-    <!--     <hlm-menu-separator /> -->
-    <!---->
-    <!--     <button hlmMenuItem [brnMenuTriggerFor]="share"> -->
-    <!--       Share -->
-    <!--       <hlm-menu-item-sub-indicator /> -->
-    <!--     </button> -->
-    <!--   </hlm-menu> -->
-    <!-- </ng-template> -->
-    <!-- <ng-template #share> -->
-    <!--   <hlm-sub-menu> -->
-    <!--     <button hlmMenuItem>Email link</button> -->
-    <!--   </hlm-sub-menu> -->
-    <!-- </ng-template> -->
   </nav>
 </aside>

@@ -18,12 +18,12 @@ export class RoutingService {
         filter((event) => event instanceof NavigationEnd),
         shareReplay(1),
       )
-      .subscribe((ev) => this.currentRouteEvent.set(ev as NavigationEnd));
+      .subscribe((ev) => {
+        this.currentRouteEvent.set(ev as NavigationEnd);
+      });
   }
 
   public currentRoute = computed(() => {
-    return toSidebarItems(routes).find(
-      (r) => r.path === this.currentRouteEvent()?.url,
-    );
+    return routes.find((r) => '/' + r.path === this.currentRouteEvent()?.url);
   });
 }
