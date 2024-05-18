@@ -14,7 +14,7 @@ export class DocumentService {
 
   private pdfService = inject(PdfService);
 
-  async generatePDF(doc: IDocument) {
+  async generatePDF(doc: IDocument): Promise<string | null> {
     try {
       const selectDialogPromise = SelectDialog();
       const replaceHtmlPromise = this.pdfService.replace(doc);
@@ -23,12 +23,14 @@ export class DocumentService {
         replaceHtmlPromise,
       ]);
       if (result[0].status !== 'fulfilled' || result[1].status !== 'fulfilled')
-        return;
+        return null;
       const path = result[0].value;
       const html = result[1].value;
       await GeneretePDF(path, 'test', html);
+      return path;
     } catch (e) {
       console.log({ e });
+      return null;
     }
   }
 

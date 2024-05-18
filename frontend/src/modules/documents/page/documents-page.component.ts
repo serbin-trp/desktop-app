@@ -102,6 +102,11 @@ export class DocumentsPageComponent {
     return trx.reduce((v, a) => sum(v, a), '0');
   }
   generate(doc: IDocument) {
-    this.ds.generatePDF(doc);
+    this.ds.generatePDF(doc).then((path) => {
+      if (path)
+        toast.success('Pdf successfully generated!', {
+          description: `Path: ${path}`,
+        });
+    });
   }
 }
