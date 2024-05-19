@@ -5,6 +5,10 @@ import (
 	"database/sql"
 	_ "embed"
 	"log"
+	"os"
+	"os/user"
+	"path"
+	"path/filepath"
 
 	qr "app/storage/db"
 
@@ -13,11 +17,10 @@ import (
 
 var ddl = `
 CREATE TABLE IF NOT EXISTS Client (
-    id TEXT PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     firstName TEXT NOT NULL,
     lastName TEXT NOT NULL,
     fathersName TEXT NOT NULL,
-    clientId TEXT NOT NULL,
     title TEXT NOT NULL,
     ipn TEXT NOT NULL,
     address TEXT NOT NULL,
@@ -26,9 +29,9 @@ CREATE TABLE IF NOT EXISTS Client (
 );
 
 CREATE TABLE IF NOT EXISTS Document (
-    id TEXT PRIMARY KEY,
-    executorId TEXT NOT NULL,
-    contractorId TEXT NOT NULL,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    executorId INTEGER NOT NULL,
+    contractorId INTEGER NOT NULL ,
     date TEXT NOT NULL,
     title TEXT NOT NULL,
     FOREIGN KEY (executorId) REFERENCES Client(id),
@@ -37,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Document (
 
 CREATE TABLE IF NOT EXISTS DocTransaction (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    documentId TEXT NOT NULL,
+    documentId INTEGER NOT NULL,
     amount TEXT NOT NULL,
     FOREIGN KEY (documentId) REFERENCES Document(id)
 );
@@ -45,7 +48,15 @@ CREATE TABLE IF NOT EXISTS DocTransaction (
 
 func InitDB() (*qr.Queries, *sql.DB, error) {
 	ctx := context.Background()
-	database, err := sql.Open("sqlite3", "./db.sqlite")
+
+	trgPath, err := createTrgDirectory()
+
+	if err != nil {
+		log.Println("CREATE DIR", err)
+		return nil, nil, err
+	}
+
+	database, err := sql.Open("sqlite3", path.Join(trgPath, "db.sqlite"))
 	if err != nil {
 		log.Println("OPEN ERROR", err)
 		return nil, nil, err
@@ -59,4 +70,28 @@ func InitDB() (*qr.Queries, *sql.DB, error) {
 
 	queries := qr.New(database)
 	return queries, database, nil
+}
+
+func createTrgDirectory() (string, error) {
+	// Get current user's information
+	currentUser, err := user.Current()
+	if err != nil {
+		return "", err
+	}
+
+	// Get the home directory of the current user
+	homeDir := currentUser.HomeDir
+
+	// Create the path for the .trg directory
+	trgDirPath := filepath.Join(homeDir, ".trg")
+
+	// Check if the directory already exists
+	if _, err := os.Stat(trgDirPath); os.IsNotExist(err) {
+		// Create the .trg directory
+		if err := os.Mkdir(trgDirPath, 0755); err != nil {
+			return "", err
+		}
+	}
+
+	return trgDirPath, nil
 }
