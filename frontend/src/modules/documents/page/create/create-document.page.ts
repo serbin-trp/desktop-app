@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject, signal } from '@angular/core';
 import { toast } from 'ngx-sonner';
 import {
   FormArray,
@@ -17,11 +17,14 @@ import { DocumentService } from '@modules/documents/data-access/document.service
 import { NgFor } from '@angular/common';
 import { hlmH2 } from '@core/ui-kit/ui-typography-helm/src';
 import { Router } from '@angular/router';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   standalone: true,
   selector: 'create-document-page',
   templateUrl: './create-document.page.html',
+  styleUrl: './create-document-page.component.scss',
   imports: [
     ReactiveFormsModule,
     BrnSelectImports,
@@ -31,8 +34,11 @@ import { Router } from '@angular/router';
 
     HlmInputDirective,
     NgFor,
+    MatNativeDateModule,
+    MatDatepickerModule,
   ],
   providers: [ClientsService, DocumentService],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CreateDocumentPageComponent {
   h2 = hlmH2;

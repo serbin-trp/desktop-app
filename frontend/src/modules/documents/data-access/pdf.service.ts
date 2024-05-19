@@ -77,11 +77,11 @@ function numberToUkrainianText(number: number): string {
     'два',
     'три',
     'чотири',
-    'п’ять',
+    "п'ять",
     'шість',
     'сім',
     'вісім',
-    'дев’ять',
+    "дев'ять",
   ];
   const unitsFeminine: string[] = [
     'нуль',
@@ -89,11 +89,11 @@ function numberToUkrainianText(number: number): string {
     'дві',
     'три',
     'чотири',
-    'п’ять',
+    "п'ять",
     'шість',
     'сім',
     'вісім',
-    'дев’ять',
+    "дев'ять",
   ];
   const teens: string[] = [
     'десять',
@@ -101,11 +101,11 @@ function numberToUkrainianText(number: number): string {
     'дванадцять',
     'тринадцять',
     'чотирнадцять',
-    'п’ятнадцять',
+    "п'ятнадцять",
     'шістнадцять',
     'сімнадцять',
     'вісімнадцять',
-    'дев’ятнадцять',
+    "дев'ятнадцять",
   ];
   const tens: string[] = [
     '',
@@ -113,11 +113,11 @@ function numberToUkrainianText(number: number): string {
     'двадцять',
     'тридцять',
     'сорок',
-    'п’ятдесят',
+    "п'ятдесят",
     'шістдесят',
     'сімдесят',
     'вісімдесят',
-    'дев’яносто',
+    "дев'яносто",
   ];
   const hundreds: string[] = [
     '',
@@ -125,11 +125,11 @@ function numberToUkrainianText(number: number): string {
     'двісті',
     'триста',
     'чотириста',
-    'п’ятсот',
+    "п'ятсот",
     'шістсот',
     'сімсот',
     'вісімсот',
-    'дев’ятсот',
+    "дев'ятсот",
   ];
   const thousandsForms: string[] = ['тисяча', 'тисячі', 'тисяч'];
   const hryvniaForms: string[] = ['гривня', 'гривні', 'гривень'];
@@ -209,5 +209,12 @@ function numberToUkrainianText(number: number): string {
   const hryvniaText = getCurrencyText(wholePart, hryvniaForms);
   const kopiykaText = getCurrencyText(fractionalPart, kopiykaForms);
 
+  // Correcting gender for the number "два" (two) in the whole part
+  const lastTwoDigits = wholePart % 100;
+  const feminineWholePart = lastTwoDigits === 2 ? true : false;
+
   return `${wholeText} ${hryvniaText} ${fractionalText} ${kopiykaText}`;
 }
+
+// Example usage:
+console.log(numberToUkrainianText(87062.24)); // Output: вісімдесят сім тисяч шістдесят дві гривні двадцять чотири копійки

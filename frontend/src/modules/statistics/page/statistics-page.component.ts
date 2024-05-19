@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+
 import {
   HlmCardContentDirective,
   HlmCardDescriptionDirective,
@@ -32,17 +33,21 @@ import { DocumentService } from '@modules/documents/data-access/document.service
     HlmButtonDirective,
     CommonModule,
   ],
+
   providers: [provideIcons({ lucideLaugh, lucideFile })],
 })
 export class StatisticsPageComponent {
   h1 = hlmH1;
+
   private cS = inject(ClientsService);
   private dS = inject(DocumentService);
 
   constructor() {
     this.cS.getAll().then((resp) => this.amountOfClient.set(resp.length));
+
     this.dS.getAll().then((resp) => this.amountOfDocuments.set(resp.length));
   }
+
   amountOfClient = signal<number>(0);
   amountOfDocuments = signal<number>(0);
 }

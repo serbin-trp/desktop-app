@@ -43,6 +43,7 @@ export class DocumentService {
     const newDocument: IDocument = {
       id,
       ...document,
+      date: this.formatDate(document.date as Date),
     };
     documents.unshift(newDocument);
     await this.storage.instance.write(this.storageKey, documents);
@@ -61,5 +62,23 @@ export class DocumentService {
 
   async getAll() {
     return await this.storage.instance.read<IDocument[]>(this.storageKey, []);
+  }
+  formatDate(date: Date) {
+    // Get the day, month, and year from the date object
+    let day: string | number = date.getDate();
+    let month: string | number = date.getMonth() + 1; // Months are zero-based, so add 1
+    let year = date.getFullYear();
+
+    // Pad day and month with leading zeros if necessary
+    if (day < 10) {
+      day = '0' + day;
+    }
+    if (month < 10) {
+      month = '0' + month;
+    }
+
+    // Return the date in DD/MM/YYYY format
+    const seperator = '.';
+    return day + seperator + month + seperator + year;
   }
 }

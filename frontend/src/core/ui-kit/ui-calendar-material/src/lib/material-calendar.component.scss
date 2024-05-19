@@ -1,0 +1,59 @@
+.mat-datepicker-content {
+  background-color: hsl(var(--primary-foreground)) !important;
+  /* Background color for the datepicker popup */
+
+  border: 1px solid hsl(var(--border));
+  /* Text color */
+  border-radius: 8px;
+  /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  /* Shadow for popup */
+}
+
+.mat-calendar * {
+  --mat-datepicker-calendar-header-divider-color: var(--border);
+  color: hsl(var(--primary)) !important;
+}
+
+.mat-calendar-body-cell {
+  width: 40px;
+  /* Cell width */
+  height: 40px;
+  /* Cell height */
+  line-height: 40px;
+  /* Center text vertically */
+  text-align: center;
+  /* Center text horizontally */
+  border-radius: 50%;
+  /* Rounded cells */
+  transition: background-color 0.3s;
+  /* Smooth background color transition */
+}
+
+.mat-calendar-body-cell:hover {
+  background-color: hsl(var(--popover)) !important;
+  background-color: #eeeeee;
+  /* Hover background color */
+}
+
+.mat-calendar-body-selected {
+  background-color: hsl(var(--secondary)) !important;
+  /* Selected date background color */
+  color: #ffffff !important;
+  /* Selected date text color */
+}
+
+.mat-calendar-body-disabled {
+  color: #cccccc;
+  /* Disabled date text color */
+}
+
+/* Custom styles for the datepicker toggle */
+.mat-datepicker-toggle {
+  color: #1976d2 hsl(var(--primary)) !important;
+  /* Primary color for toggle */
+}
+
+.mat-calendar-arrow polygon {
+  fill: hsl(var(--primary)) !important;
+}

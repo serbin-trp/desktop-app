@@ -9,4 +9,10 @@ export interface IDocument {
   transactions: string[];
 }
 
-export type CreateDocumentDTO = Omit<IDocument, 'id'>;
+export interface CreateDocumentDTO {
+  executor: IClient;
+  contractor: IClient;
+  date: string | Date;
+  title: string;
+  transactions: string[];
+}
