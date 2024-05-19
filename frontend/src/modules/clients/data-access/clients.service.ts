@@ -1,80 +1,45 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { CreateClientDTO, EditClientDTO } from '../models/client.model';
 import {
-  CreateClientDTO,
-  EditClientDTO,
-  IClient,
-} from '../models/client.model';
-import { StorageService } from '@storage';
-import { generateId } from '@core/utils/generate-id';
+  DeleteClient,
+  GetAllClients,
+  GetClient,
+  NewClient,
+  UpdateClient,
+} from '@wails/api/API';
+
+import { api } from '@wails/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientsService {
-  private storage = inject(StorageService);
-  private storageKey = 'clients';
-
   async create(createClientDTO: CreateClientDTO) {
-    const clients = await this.storage.instance.read<IClient[]>(
-      this.storageKey,
-      [],
-    );
-    const cId = generateId();
-    const newClient: IClient = {
+    const title = `${createClientDTO.lastName} ${createClientDTO.firstName} ${createClientDTO.fathersName}`;
+    const payload = api.CreateClientParams.createFrom({
       ...createClientDTO,
-      id: cId,
-      details: {
-        clientId: cId,
-        title: `${createClientDTO.lastName} ${createClientDTO.firstName} ${createClientDTO.fathersName}`,
-        ipn: '',
-        phone: '',
-        account: '',
-        address: '',
-      },
-    };
-    clients.push(newClient);
-    await this.storage.instance.write(this.storageKey, clients);
+      title,
+    });
+    await NewClient(payload);
   }
 
-  async update(id: string, payload: EditClientDTO) {
-    const clientToUpdate = await this.getById(id);
-    if (!clientToUpdate) return;
-    clientToUpdate.firstName = payload.firstName;
-    clientToUpdate.lastName = payload.lastName;
-    clientToUpdate.fathersName = payload.fathersName;
-    clientToUpdate.details.address = payload.details.address;
-    clientToUpdate.details.phone = payload.details.phone;
-    clientToUpdate.details.ipn = payload.details.ipn;
-    clientToUpdate.details.account = payload.details.account;
-    clientToUpdate.details.title = payload.details.title;
-    await this.delete(id);
-    const clients = await this.getAll();
-    clients.unshift(clientToUpdate);
-    await this.storage.instance.write(this.storageKey, clients);
+  async update(id: number, payload: EditClientDTO) {
+    const data: api.UpdateClientByIDParams =
+      api.UpdateClientByIDParams.createFrom({ id, ...payload });
+    await UpdateClient(data);
   }
 
-  async delete(id: string) {
-    const clients = await this.storage.instance.read<IClient[]>(
-      this.storageKey,
-      [],
-    );
-    const foundClient = clients.find((el) => el.id === id);
-    if (!foundClient) return;
-    const clientsCopy = [...clients];
-    const filteredClients = clientsCopy.filter((el) => el.id !== id);
-    await this.storage.instance.write(this.storageKey, filteredClients);
+  async delete(id: number) {
+    await DeleteClient(id);
   }
 
-  getAll() {
-    return this.storage.instance.read<IClient[]>(this.storageKey, []);
+  async getAll(): Promise<api.Client[]> {
+    const resp = await GetAllClients();
+    return resp;
   }
-  async getById(id: string): Promise<IClient | undefined> {
-    const clients = await this.storage.instance.read<IClient[]>(
-      this.storageKey,
-      [],
-    );
-    const foundClient = clients.find((el) => el.id === id);
-    if (!foundClient) return undefined;
-    else return foundClient;
+
+  async getById(id: number): Promise<api.Client> {
+    const resp = await GetClient(id);
+    return resp;
   }
 }

@@ -1,6 +1,8 @@
 package main
 
 import (
+	"app/api"
+	"app/storage"
 	"embed"
 
 	"github.com/wailsapp/wails/v2"
@@ -13,10 +15,15 @@ var assets embed.FS
 
 func main() {
 	// Create an instance of the app structure
+
 	app := NewApp()
 
+	queries, db, err := storage.InitDB()
+
+	api := api.NewAPI(*queries, db)
+
 	// Create application with options
-	err := wails.Run(&options.App{
+	err = wails.Run(&options.App{
 		Title:  "app",
 		Width:  1024,
 		Height: 768,
@@ -27,6 +34,7 @@ func main() {
 		OnStartup:        app.startup,
 		Bind: []interface{}{
 			app,
+			api,
 		},
 	})
 

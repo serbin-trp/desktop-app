@@ -2,10 +2,7 @@
   <hlm-icon class="mr-2" size="sm" name="lucidePlus"></hlm-icon>
   Create
 </button>
-<create-client-modal
-  [(open)]="isModalOpen"
-  (onCreate)="handleCreate()"
-></create-client-modal>
+<create-client-modal [(open)]="isModalOpen" (onCreate)="handleCreate()"></create-client-modal>
 <hlm-table class="w-full min-w-[400px]">
   <hlm-trow>
     <hlm-th class="flex-1">Name</hlm-th>
@@ -14,46 +11,38 @@
     <hlm-th class="justify-end">Actions</hlm-th>
   </hlm-trow>
   @if (clients$ | async; as clients) {
-    @for (client of clients; track client.id) {
-      <hlm-trow [brnCtxMenuTriggerFor]="menu">
-        <hlm-td class="flex-1">{{ client.details.title }}</hlm-td>
-        <hlm-td class="flex-1">{{ client.details.phone }}</hlm-td>
-        <hlm-td class="flex-1">{{ client.details.address }}</hlm-td>
-        <hlm-td class="justify-end">
-          <button
-            hlmBtn
-            size="icon"
-            variant="outline"
-            [brnMenuTriggerFor]="menu"
-          >
-            <hlm-icon size="sm" name="lucideMoreVertical" />
-          </button>
-          <ng-template #menu>
-            <hlm-menu>
-              <hlm-menu-label>Customer's actions</hlm-menu-label>
-              <hlm-menu-separator />
-              <hlm-menu-group>
-                <a [routerLink]="'/clients/edit/' + client.id" hlmMenuItem>
-                  <hlm-icon name="lucideUser" hlmMenuIcon />
-                  <span>Edit</span>
-                </a>
-                <button
-                  hlmMenuItem
-                  (click)="copyToClipboard(client.details.title)"
-                >
-                  <hlm-icon name="lucideFile" hlmMenuIcon></hlm-icon>
-                  <span>Copy Name</span>
-                </button>
-                <hlm-menu-separator />
-                <button hlmMenuItem (click)="handleDelete(client.id)">
-                  <hlm-icon name="lucideTrash" hlmMenuIcon />
-                  <span>Delete</span>
-                </button>
-              </hlm-menu-group>
-            </hlm-menu>
-          </ng-template>
-        </hlm-td>
-      </hlm-trow>
-    }
+  @for (client of clients; track client.id) {
+  <hlm-trow [brnCtxMenuTriggerFor]="menu">
+    <hlm-td class="flex-1">{{ client.title }}</hlm-td>
+    <hlm-td class="flex-1">{{ client.phone }}</hlm-td>
+    <hlm-td class="flex-1">{{ client.address }}</hlm-td>
+    <hlm-td class="justify-end">
+      <button hlmBtn size="icon" variant="outline" [brnMenuTriggerFor]="menu">
+        <hlm-icon size="sm" name="lucideMoreVertical" />
+      </button>
+      <ng-template #menu>
+        <hlm-menu>
+          <hlm-menu-label>Customer's actions</hlm-menu-label>
+          <hlm-menu-separator />
+          <hlm-menu-group>
+            <a [routerLink]="'/clients/edit/' + client.id" hlmMenuItem>
+              <hlm-icon name="lucideUser" hlmMenuIcon />
+              <span>Edit</span>
+            </a>
+            <button hlmMenuItem (click)="copyToClipboard(client.title)">
+              <hlm-icon name="lucideFile" hlmMenuIcon></hlm-icon>
+              <span>Copy Name</span>
+            </button>
+            <hlm-menu-separator />
+            <button hlmMenuItem (click)="handleDelete(client.id)">
+              <hlm-icon name="lucideTrash" hlmMenuIcon />
+              <span>Delete</span>
+            </button>
+          </hlm-menu-group>
+        </hlm-menu>
+      </ng-template>
+    </hlm-td>
+  </hlm-trow>
+  }
   }
 </hlm-table>

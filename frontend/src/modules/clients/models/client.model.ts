@@ -1,12 +1,9 @@
-import { IClientDetails } from './details.model';
+import { api } from '@wails/models';
 
-export interface IClient {
-  id: string;
-  firstName: string;
-  lastName: string;
-  fathersName: string;
-  details: IClientDetails;
-}
+export type IClient = api.Client;
 
-export type CreateClientDTO = Omit<IClient, 'id' | 'details'>;
-export type EditClientDTO = IClient;
+export type CreateClientDTO = Omit<
+  IClient,
+  'id' | 'title' | 'ipn' | 'address' | 'phone' | 'account'
+>;
+export type EditClientDTO = Omit<IClient, 'id'>;

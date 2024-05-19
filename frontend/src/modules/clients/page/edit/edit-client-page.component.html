@@ -1,50 +1,40 @@
 @if (clientForm) {
-  <form
-    [formGroup]="clientForm"
-    (ngSubmit)="onSubmit()"
-    class="py-4 grid gap-4"
-  >
-    <h1 [class]="h2">Edit client</h1>
-    <div class="items-center grid grid-cols-4 gap-4">
-      <label hlmLabel for="lastName">Last name </label>
-      <input hlmInput formControlName="lastName" />
-    </div>
-    <div class="items-center grid grid-cols-4 gap-4">
-      <label hlmLabel for="firstName">First name </label>
-      <input hlmInput formControlName="firstName" />
-    </div>
-    <div class="items-center grid grid-cols-4 gap-4">
-      <label hlmLabel for="fathersName">Father's name </label>
-      <input hlmInput formControlName="fathersName" />
-    </div>
+<form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="py-4 grid gap-4">
+  <h1 [class]="h2">Edit client</h1>
+  <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="lastName">Last name </label>
+    <input hlmInput formControlName="lastName" />
+  </div>
+  <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="firstName">First name </label>
+    <input hlmInput formControlName="firstName" />
+  </div>
+  <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="fathersName">Father's name </label>
+    <input hlmInput formControlName="fathersName" />
+  </div>
 
-    <div
-      formGroupName="details"
-      (ngSubmit)="onSubmit()"
-      class="py-4 grid gap-4"
-    >
-      <h2 [class]="h3">Clients details</h2>
-      <div class="items-center grid grid-cols-4 gap-4">
-        <label hlmLabel for="title">Title</label>
-        <input hlmInput formControlName="title" />
-      </div>
-      <div class="items-center grid grid-cols-4 gap-4">
-        <label hlmLabel for="ipn">IPN</label>
-        <input hlmInput formControlName="ipn" />
-      </div>
-      <div class="items-center grid grid-cols-4 gap-4">
-        <label hlmLabel for="account">Account # </label>
-        <input hlmInput formControlName="account" />
-      </div>
-      <div class="items-center grid grid-cols-4 gap-4">
-        <label hlmLabel for="address">Address</label>
-        <input hlmInput formControlName="address" />
-      </div>
-      <div class="items-center grid grid-cols-4 gap-4">
-        <label hlmLabel for="phone">Phone</label>
-        <input hlmInput formControlName="phone" />
-      </div>
-    </div>
-    <button class="w-1/2" hlmBtn type="submit">Submit</button>
-  </form>
+  <h2 [class]="h3">Clients details</h2>
+  <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="title">Title</label>
+    <input hlmInput formControlName="title" />
+  </div>
+  <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="ipn">IPN</label>
+    <input hlmInput formControlName="ipn" />
+  </div>
+  <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="account">Account # </label>
+    <input hlmInput formControlName="account" />
+  </div>
+  <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="address">Address</label>
+    <input hlmInput formControlName="address" />
+  </div>
+  <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="phone">Phone</label>
+    <input hlmInput formControlName="phone" />
+  </div>
+  <button class="w-1/2" hlmBtn type="submit">Submit</button>
+</form>
 }

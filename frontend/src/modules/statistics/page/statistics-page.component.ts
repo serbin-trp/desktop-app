@@ -15,6 +15,7 @@ import { hlmH1 } from '@core/ui-kit/ui-typography-helm/src';
 import { CommonModule } from '@angular/common';
 import { ClientsService } from '@modules/clients/data-access/clients.service';
 import { DocumentService } from '@modules/documents/data-access/document.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -32,6 +33,7 @@ import { DocumentService } from '@modules/documents/data-access/document.service
     HlmIconComponent,
     HlmButtonDirective,
     CommonModule,
+    RouterLink,
   ],
 
   providers: [provideIcons({ lucideLaugh, lucideFile })],

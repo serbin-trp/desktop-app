@@ -1,20 +1,24 @@
 import { Injectable, inject } from '@angular/core';
 import { StorageService } from '@storage';
 import { CreateDocumentDTO, IDocument } from '../models/document.model';
-import { generateId } from '@core/utils/generate-id';
 import { SelectDialog, GeneretePDF } from '@wails/main/App';
 import { PdfService } from './pdf.service';
+import {
+  CreateDocument,
+  CreateTransaction,
+  DeleteDocument,
+  GetDocumentByID,
+  GetDocuments,
+} from '@wails/api/API';
+import { api } from '@wails/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DocumentService {
-  private storageKey = 'documents';
-  private storage = inject(StorageService);
-
   private pdfService = inject(PdfService);
 
-  async generatePDF(doc: IDocument): Promise<string | null> {
+  async generatePDF(doc: api.Document): Promise<string | null> {
     try {
       const selectDialogPromise = SelectDialog();
       const replaceHtmlPromise = this.pdfService.replace(doc);
@@ -35,33 +39,34 @@ export class DocumentService {
   }
 
   async create(document: CreateDocumentDTO) {
-    const documents = await this.storage.instance.read<IDocument[]>(
-      this.storageKey,
-      [],
-    );
-    const id = generateId();
-    const newDocument: IDocument = {
-      id,
-      ...document,
-      date: this.formatDate(document.date as Date),
-    };
-    documents.unshift(newDocument);
-    await this.storage.instance.write(this.storageKey, documents);
+    try {
+      const params: api.CreateDocumentParams = {
+        date: document.date as string,
+        title: document.title,
+        executorId: document.executor.id,
+        contractorId: document.contractor.id,
+      };
+      const id = await CreateDocument(params);
+      const promises = document.transactions.map((t) =>
+        CreateTransaction({ documentId: id, amount: t }),
+      );
+
+      await Promise.all(promises);
+    } catch (e) {
+      console.log({ e });
+    }
   }
 
-  async getById(id: string) {
-    const documents = await this.getAll();
-    return documents.find((el) => el.id === id);
+  async getById(id: number) {
+    return GetDocumentByID(id);
   }
 
-  async delete(id: string) {
-    const documents = await this.getAll();
-    const filteredDocs = documents.filter((el) => el.id !== id);
-    await this.storage.instance.write(this.storageKey, filteredDocs);
+  async delete(id: number) {
+    return DeleteDocument(id);
   }
 
   async getAll() {
-    return await this.storage.instance.read<IDocument[]>(this.storageKey, []);
+    return GetDocuments();
   }
   formatDate(date: Date) {
     // Get the day, month, and year from the date object

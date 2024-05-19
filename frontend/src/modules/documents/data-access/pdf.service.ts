@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { IDocument } from '../models/document.model';
 import htmlTemplate from '@utils/html/template';
 import rowTemplate from '@utils/html/row';
 import juice from 'juice';
-import { evaluate } from 'mathjs';
 import { IClient } from '@modules/clients/models/client.model';
 import { sum } from '@utils/math';
+import { api } from '@wails/models';
 
 const trxTitle = {
   first: "Комп'ютерне програмування",
@@ -16,24 +15,21 @@ const trxTitle = {
   providedIn: 'root',
 })
 export class PdfService {
-  replace(doc: IDocument): Promise<string> {
+  replace(doc: api.Document): Promise<string> {
     return new Promise((resolve) => {
       const rows = doc.transactions.map(replaceRow);
       const withValues = htmlTemplate
         .replaceAll('{{docTitle}}', doc.title)
-        .replaceAll('{{executorTitle}}', `ФОП "${doc.executor.details.title}"`)
-        .replaceAll(
-          '{{contractorTitle}}',
-          `ФОП "${doc.contractor.details.title}"`,
-        )
-        .replaceAll('{{executorIPN}}', doc.executor.details.ipn)
-        .replaceAll('{{contractorIPN}}', doc.contractor.details.ipn)
-        .replaceAll('{{executorAddress}}', doc.executor.details.address)
-        .replaceAll('{{contractorAddress}}', doc.contractor.details.address)
-        .replaceAll('{{executorAccount}}', doc.executor.details.account)
-        .replaceAll('{{contractorAccount}}', doc.contractor.details.account)
-        .replaceAll('{{executorPhone}}', doc.executor.details.phone)
-        .replaceAll('{{contractorPhone}}', doc.contractor.details.phone)
+        .replaceAll('{{executorTitle}}', `ФОП "${doc.executor.title}"`)
+        .replaceAll('{{contractorTitle}}', `ФОП "${doc.contractor.title}"`)
+        .replaceAll('{{executorIPN}}', doc.executor.ipn)
+        .replaceAll('{{contractorIPN}}', doc.contractor.ipn)
+        .replaceAll('{{executorAddress}}', doc.executor.address)
+        .replaceAll('{{contractorAddress}}', doc.contractor.address)
+        .replaceAll('{{executorAccount}}', doc.executor.account)
+        .replaceAll('{{contractorAccount}}', doc.contractor.account)
+        .replaceAll('{{executorPhone}}', doc.executor.phone)
+        .replaceAll('{{contractorPhone}}', doc.contractor.phone)
         .replaceAll('{{docDate}}', doc.date)
         .replaceAll('<section id="replaceWithTRX"></section>', rows.join(''))
         .replaceAll('{{trxAmount}}', doc.transactions.length.toString())
@@ -50,20 +46,20 @@ export class PdfService {
   }
 }
 
-function getTrxText(trxs: string[]) {
+function getTrxText(trxs: api.DocTransaction[]) {
   const sum = trxSum(trxs);
   return numberToUkrainianText(parseFloat(sum));
 }
 
-function replaceRow(trx: string, i: number) {
+function replaceRow(trx: api.DocTransaction, i: number) {
   return rowTemplate
     .replaceAll('{{trxIndex}}', (i + 1).toString())
     .replaceAll('{{trxTitle}}', i === 0 ? trxTitle.first : trxTitle.else)
-    .replaceAll('{{trxAmount}}', trx);
+    .replaceAll('{{trxAmount}}', trx.amount);
 }
 
-function trxSum(trx: string[]): string {
-  return trx.reduce((v, a) => sum(v, a), '0');
+function trxSum(trx: api.DocTransaction[]): string {
+  return trx.reduce((v, a) => sum(v, a.amount), '0');
 }
 
 function getInitials(c: IClient) {
@@ -215,6 +211,3 @@ function numberToUkrainianText(number: number): string {
 
   return `${wholeText} ${hryvniaText} ${fractionalText} ${kopiykaText}`;
 }
-
-// Example usage:
-console.log(numberToUkrainianText(87062.24)); // Output: вісімдесят сім тисяч шістдесят дві гривні двадцять чотири копійки

@@ -33,9 +33,6 @@
       "@spartan-ng/ui-alert-helm": [
         "./src/core/ui-kit/ui-alert-helm/src/index.ts"
       ],
-      "@spartan-ng/ui-calendar-material": [
-        "./src/core/ui-kit/ui-calendar-material/src/index.ts"
-      ],
       "@spartan-ng/ui-alertdialog-helm": [
         "./src/core/ui-kit/ui-alertdialog-helm/src/index.ts"
       ],
@@ -142,5 +139,6 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "include": ["wailsjs/go/models.ts", "src/**/*.ts"]
 }

@@ -38,9 +38,11 @@ import {
   lucideFile,
   lucidePlus,
   lucideFileSpreadsheet,
+  lucideCheck,
+  lucidePencil,
 } from '@ng-icons/lucide';
-import { IDocument } from '../models/document.model';
 import { sum } from '@utils/math';
+import { api } from '@wails/models';
 
 @Component({
   standalone: true,
@@ -76,6 +78,8 @@ import { sum } from '@utils/math';
     provideIcons({
       lucideTrash,
       lucideFileSpreadsheet,
+      lucidePencil,
+      lucideCheck,
 
       lucideMoreVertical,
       lucideUser,
@@ -87,21 +91,21 @@ import { sum } from '@utils/math';
 export class DocumentsPageComponent {
   private ds = inject(DocumentService);
   documents$ = this.ds.getAll();
-  docs: IDocument[] = [];
+  docs: api.Document[] = [];
 
   loadDocs() {
     this.documents$ = this.ds.getAll().then((docs) => (this.docs = docs));
   }
 
-  handleDelete(id: string) {
+  handleDelete(id: number) {
     this.ds.delete(id).then(() => this.loadDocs());
     toast.info('Document deleted successfully!');
   }
 
-  trxSum(trx: string[]): string {
-    return trx.reduce((v, a) => sum(v, a), '0');
+  trxSum(trx: api.DocTransaction[]): string {
+    return trx.reduce((v, a) => sum(v, a.amount), '0');
   }
-  generate(doc: IDocument) {
+  generate(doc: api.Document) {
     this.ds.generatePDF(doc).then((path) => {
       if (path)
         toast.success('Pdf successfully generated!', {

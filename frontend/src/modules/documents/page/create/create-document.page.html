@@ -7,7 +7,7 @@
       </hlm-select-trigger>
       <hlm-select-content>
         @for(option of clients; track option.id) {
-        <hlm-option [value]="option">{{option.details.title}}</hlm-option>
+        <hlm-option [value]="option">{{option.title}}</hlm-option>
         }
       </hlm-select-content>
     </brn-select>
@@ -21,7 +21,7 @@
       </hlm-select-trigger>
       <hlm-select-content>
         @for(option of clients; track option.id) {
-        <hlm-option [value]="option">{{option.details.title}}</hlm-option>
+        <hlm-option [value]="option">{{option.title}}</hlm-option>
         }
       </hlm-select-content>
     </brn-select>

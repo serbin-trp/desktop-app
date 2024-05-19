@@ -100,7 +100,7 @@ export class ClientsPageComponent {
     toast.success("Client's has been created!");
   }
 
-  handleDelete(id: string) {
+  handleDelete(id: number) {
     this.clientService.delete(id).then(() => this.loadClients());
     toast.info("Client's has been deleted!");
   }

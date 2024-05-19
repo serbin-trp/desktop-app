@@ -1,5 +1,5 @@
 <div class="grid gap-2 grid-cols-3">
-  <section hlmCard>
+  <a hlmCard routerLink="/clients">
     <div hlmCardHeader>
       <h3 hlmCardTitle class="flex items-center flex-row gap-2">
         <hlm-icon size="lg" name="lucideLaugh"></hlm-icon>Amount of registered
@@ -7,9 +7,9 @@
       </h3>
     </div>
     <p [ngClass]="h1" hlmCardContent>{{ amountOfClient() }}</p>
-  </section>
+  </a>
 
-  <section hlmCard>
+  <a hlmCard routerLink="/documents">
     <div hlmCardHeader>
       <h3 hlmCardTitle class="flex items-center flex-row gap-2">
         <hlm-icon size="lg" name="lucideFile"></hlm-icon>
@@ -17,5 +17,5 @@
       </h3>
     </div>
     <p [ngClass]="h1" hlmCardContent>{{ amountOfDocuments() }}</p>
-  </section>
+  </a>
 </div>

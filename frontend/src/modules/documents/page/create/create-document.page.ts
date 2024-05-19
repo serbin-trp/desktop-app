@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, inject, signal } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { toast } from 'ngx-sonner';
 import {
   FormArray,
@@ -7,7 +7,6 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { ClientsService } from '@modules/clients/data-access/clients.service';
-import { IClient } from '@modules/clients/models/client.model';
 import { BrnSelectImports } from '@spartan-ng/ui-select-brain';
 import { HlmSelectImports } from '@spartan-ng/ui-select-helm';
 import { HlmButtonDirective } from '@core/ui-kit/ui-button-helm/src';
@@ -19,6 +18,7 @@ import { hlmH2 } from '@core/ui-kit/ui-typography-helm/src';
 import { Router } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { api } from '@wails/models';
 
 @Component({
   standalone: true,
@@ -64,7 +64,7 @@ export class CreateDocumentPageComponent {
     this.transactions.push(this.fb.control(0));
   }
 
-  clients: IClient[] = [];
+  clients: api.Client[] = [];
 
   constructor() {
     this.clientsService.getAll().then((resp) => {

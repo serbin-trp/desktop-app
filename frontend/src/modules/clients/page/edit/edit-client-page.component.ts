@@ -36,13 +36,11 @@ export class EditClientPageComponent {
     firstName: [''],
     lastName: [''],
     fathersName: [''],
-    details: this.fb.group({
-      title: [''],
-      ipn: [''],
-      account: [''],
-      phone: [''],
-      address: [''],
-    }),
+    title: [''],
+    ipn: [''],
+    account: [''],
+    phone: [''],
+    address: [''],
   });
   constructor() {
     this.getClient();
@@ -57,27 +55,24 @@ export class EditClientPageComponent {
   }
 
   setupForm(client: IClient) {
-    console.log({ client });
     this.clientForm.patchValue({
       firstName: client.firstName,
       lastName: client.lastName,
       fathersName: client.fathersName,
-      details: {
-        title: client.details.title,
-        ipn: client.details.ipn,
-        account: client.details.account,
-        phone: client.details.phone,
-        address: client.details.address,
-      },
+      title: client.title,
+      ipn: client.ipn,
+      account: client.account,
+      phone: client.phone,
+      address: client.address,
     });
   }
 
   getClient() {
     this.route.paramMap
       .pipe(
-        switchMap((params: any) =>
-          this.clientService.getById(params.params.id),
-        ),
+        switchMap((params: any) => {
+          return this.clientService.getById(parseInt(params.params.id));
+        }),
         filter((c) => c !== undefined),
         takeUntilDestroyed(),
       )
