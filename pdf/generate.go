@@ -1,68 +1,57 @@
 package pdf
 
 import (
-	"bytes"
+	"context"
 	"fmt"
 	"os"
-	"os/exec"
-	"strings"
+
+	"github.com/chromedp/cdproto/page"
+	"github.com/chromedp/chromedp"
 )
 
-func GeneratePDF(opts GenerateOpts) {
+func GeneratePDF(opts GenerateOpts) error {
+	// Create context
+	ctx, cancel := chromedp.NewContext(context.Background())
+	defer cancel()
 
-	if err := checkWkhtmltopdf(); err != nil {
-		promptInstallWkhtmltopdf()
-		return
-	}
-	// HTML content as a string
-	htmlContent := opts.Content
-	// Write HTML content to a temporary file
-	htmlFilePath := "temp.html"
-	err := os.WriteFile(htmlFilePath, []byte(htmlContent), 0644)
+	// Create a temporary HTML file
+	tempHTMLFile, err := os.CreateTemp("", "*.html")
 	if err != nil {
-		fmt.Println("Error writing HTML file:", err)
-		return
+		return fmt.Errorf("failed to create temp HTML file: %v", err)
 	}
-	defer os.Remove(htmlFilePath) // Clean up after
+	defer os.Remove(tempHTMLFile.Name())
 
-	// Output path for the PDF file
-	pdfPath := opts.Path
-
-	// Run the pandoc command
-	cmd := exec.Command("wkhtmltopdf", htmlFilePath, pdfPath)
-	cmd.Stdin = strings.NewReader(htmlContent)
-
-	// Execute the command
-	var stderr bytes.Buffer
-	cmd.Stderr = &stderr
-
-	// Execute the command
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("Error:", err)
-		fmt.Println("Command stderr:", stderr.String())
-		return
+	if _, err = tempHTMLFile.Write([]byte(opts.Content)); err != nil {
+		return fmt.Errorf("failed to write to temp HTML file: %v", err)
+	}
+	if err = tempHTMLFile.Close(); err != nil {
+		return fmt.Errorf("failed to close temp HTML file: %v", err)
 	}
 
-	fmt.Println("PDF file generated successfully at", pdfPath)
-}
+	// Generate PDF
+	var buf []byte
+	if err := chromedp.Run(ctx, printToPDF(tempHTMLFile.Name(), &buf)); err != nil {
+		return fmt.Errorf("failed to generate PDF: %v", err)
+	}
 
-func getCurrentDirectory() string {
-	dir, err := os.Getwd()
-	if err != nil {
-		panic(err)
+	// Save PDF to file
+	if err := os.WriteFile(opts.Path, buf, 0644); err != nil {
+		return fmt.Errorf("failed to save PDF: %v", err)
 	}
-	return dir
-}
-func promptInstallWkhtmltopdf() {
-	fmt.Println("wkhtmltopdf is not installed. Please install it from https://wkhtmltopdf.org/downloads.html")
-	// Optionally, open the browser to the download page
-	exec.Command("open", "https://wkhtmltopdf.org/downloads.html").Start()
-}
-func checkWkhtmltopdf() error {
-	_, err := exec.LookPath("wkhtmltopdf")
-	if err != nil {
-		return fmt.Errorf("wkhtmltopdf is not installed")
-	}
+
 	return nil
+}
+
+func printToPDF(url string, res *[]byte) chromedp.Tasks {
+	return chromedp.Tasks{
+		chromedp.Navigate("file://" + url),
+		chromedp.ActionFunc(func(ctx context.Context) error {
+			buf, _, err := page.PrintToPDF().Do(ctx)
+			if err != nil {
+				return err
+			}
+			*res = buf
+			return nil
+		}),
+	}
 }

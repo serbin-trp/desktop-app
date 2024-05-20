@@ -4,7 +4,7 @@ import { AppSidebar } from '@ui/sidebar/sidebar.components';
 import { HlmScrollAreaComponent } from '@spartan-ng/ui-scrollarea-helm';
 import { RoutingService } from '@core/routing';
 import { CommonModule } from '@angular/common';
-import { hlmH1, hlmH3 } from '@core/ui-kit/ui-typography-helm/src';
+import { hlmH3 } from '@core/ui-kit/ui-typography-helm/src';
 
 @Component({
   standalone: true,

@@ -10,6 +10,7 @@ import {
   SidebarRoute,
   RoutingService,
 } from '@core/routing';
+import { LogoComponent } from '../logo/logo.component';
 
 type Route = SidebarRoute & { variant: 'secondary' | 'ghost' | 'default' };
 
@@ -19,7 +20,13 @@ type Route = SidebarRoute & { variant: 'secondary' | 'ghost' | 'default' };
   templateUrl: './sidebar.components.html',
   styleUrl: './sidebar.components.scss',
   providers: [provideIcons({ lucideBarChart2, lucideFile, lucideLaugh })],
-  imports: [HlmIconComponent, HlmButtonDirective, RouterLink, RouterLinkActive],
+  imports: [
+    HlmIconComponent,
+    HlmButtonDirective,
+    RouterLink,
+    RouterLinkActive,
+    LogoComponent,
+  ],
 })
 export class AppSidebar {
   routerService = inject(RoutingService);

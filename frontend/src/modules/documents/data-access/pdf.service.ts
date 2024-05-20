@@ -33,7 +33,7 @@ export class PdfService {
         .replaceAll('{{docDate}}', doc.date)
         .replaceAll('<section id="replaceWithTRX"></section>', rows.join(''))
         .replaceAll('{{trxAmount}}', doc.transactions.length.toString())
-        .replaceAll('{{trxSum}}', trxSum(doc.transactions).toString())
+        .replaceAll('{{trxSum}}', trxSum(doc.transactions))
         .replaceAll('{{trxSumWords}}', getTrxText(doc.transactions))
         .replaceAll('{{executorInitials}}', `/${getInitials(doc.executor)}`)
         .replaceAll(
@@ -55,11 +55,14 @@ function replaceRow(trx: api.DocTransaction, i: number) {
   return rowTemplate
     .replaceAll('{{trxIndex}}', (i + 1).toString())
     .replaceAll('{{trxTitle}}', i === 0 ? trxTitle.first : trxTitle.else)
-    .replaceAll('{{trxAmount}}', trx.amount);
+    .replaceAll(
+      '{{trxAmount}}',
+      parseFloat(trx.amount).toFixed(2).replace('.', ','),
+    );
 }
 
 function trxSum(trx: api.DocTransaction[]): string {
-  return trx.reduce((v, a) => sum(v, a.amount), '0');
+  return trx.reduce((v, a) => sum(v, a.amount), '0').replace('.', ',');
 }
 
 function getInitials(c: IClient) {

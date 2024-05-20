@@ -41,7 +41,7 @@ export class DocumentService {
   async create(document: CreateDocumentDTO) {
     try {
       const params: api.CreateDocumentParams = {
-        date: document.date as string,
+        date: this.formatDate(document.date as Date),
         title: document.title,
         executorId: document.executor.id,
         contractorId: document.contractor.id,
@@ -68,7 +68,8 @@ export class DocumentService {
   async getAll() {
     return GetDocuments();
   }
-  formatDate(date: Date) {
+
+  formatDate(date: Date): string {
     // Get the day, month, and year from the date object
     let day: string | number = date.getDate();
     let month: string | number = date.getMonth() + 1; // Months are zero-based, so add 1
