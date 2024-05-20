@@ -3,7 +3,6 @@ package main
 import (
 	"app/api"
 	"app/storage"
-	"log"
 
 	"embed"
 
@@ -16,6 +15,9 @@ import (
 //go:embed all:frontend/dist
 var assets embed.FS
 
+//go:embed log.png
+var icon []byte
+
 func main() {
 	// Create an instance of the app structure
 	app := NewApp()
@@ -24,8 +26,8 @@ func main() {
 
 	api := api.NewAPI(*queries, db)
 
-	icon := GetIcon()
-	log.Println(icon)
+	// icon := GetIcon()
+	// log.Println(icon)
 	// Create application with options
 	err = wails.Run(&options.App{
 		Title:  "trg",
