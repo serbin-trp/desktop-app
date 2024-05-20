@@ -3,8 +3,8 @@ name: Wails build
 on:
   push:
     tags:
-    # Match any new tag
-      - '*'
+      # Match any new tag
+      - "*"
 
 env:
   # Necessary for most environments as build failure can occur due to OOM issues
@@ -13,19 +13,19 @@ env:
 jobs:
   build:
     strategy:
-    # Failure in one platform build won't impact the others
+      # Failure in one platform build won't impact the others
       fail-fast: false
       matrix:
         build:
-          - name: 'App'
-            platform:  'linux/amd64'
-            os: 'ubuntu-latest'
-          - name: 'App'
-            platform:  'windows/amd64'
-            os: 'windows-latest'
-          - name: 'App'
-            platform:  'darwin/universal'
-            os: 'macos-latest'
+          - name: "trg"
+            platform: "linux/amd64"
+            os: "ubuntu-latest"
+          - name: "trg"
+            platform: "windows/amd64"
+            os: "windows-latest"
+          - name: "trg"
+            platform: "darwin/universal"
+            os: "macos-latest"
 
     runs-on: ${{ matrix.build.os }}
     steps:
@@ -42,5 +42,5 @@ jobs:
           build-platform: ${{ matrix.build.platform }}
           sign: false
           package: true
-          go-version: '1.22'
-          node-version: '20.12.2'
+          go-version: "1.22"
+          node-version: "20.12.2"
