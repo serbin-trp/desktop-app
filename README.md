@@ -1,57 +1,97 @@
-# README
+# README Tax Report Generation Desktop App
+
+![Logo](./logo.png)
 
 ## About
 
-This is Tax Report generation Desktop App
+This is a Tax Report Generation Desktop App designed to streamline the process of creating tax reports. The app supports desktop and mobile platforms, providing a versatile solution for various environments.
 
-## List of tools
+## Features
 
-- [Starter Template](https://github.com/ilsrbn/ng-mob-desktop-template)
-- For desktop- [Golang](https://go.dev/)/[Wails](https://wails.io/)
-- For mobile- [Capacitor](https://capacitorjs.com/)
-- For Frontend- [Angular](https://angular.dev/)
-- For UI- [SpartanNG](https://www.spartan.ng/)
+- **Cross-Platform Compatibility**: Supports desktop (Linux, Windows).
+- **Frontend Framework**: Built using Angular for a robust and dynamic user interface.
+- **Backend**: Powered by Golang and Wails for desktop applications.
+- **PDF Generation**: Includes functionality to generate PDF reports.
 
 ## Requirements
 
-- Node v20.12.2
-- Go v1.22.2
+- **Node.js**: v20.12.2
+- **Go**: v1.22.2
 
-## Tested on
+## Tested On
 
-- Manjaro Linux x86_64, Kernel: 6.6.26-1-MANJARO
-- Windows 11
-- Android 13 / OneUI: 5.1
+- **Linux**: Manjaro Linux x86_64, Kernel 6.6.26-1-MANJARO
+- **Windows**: Windows 11
 
-## Usage
+## Installation and Usage
 
-Mostly you will use Wails or Capacitor CLI, so refer to their docs to understand how to build, run, add iOS support, etc.
+### Install Dependencies
 
-Few examples are here:
-
-**Install**
+Navigate to the `frontend` directory and install dependencies:
 
 ```bash
 cd frontend
-
-# Install all dependencies from package-lock.json
 npm ci
 npm run build
 ```
 
-**Start desktop app**
+### Start Desktop App
+
+Use the Wails CLI to run the desktop application:
 
 ```bash
-# Using Wails CLI
 wails dev
 ```
 
-**Start Mobile app**
+## Directory Structure
 
-```bash
-cd frontend
-
-# Using Capacitor CLI
-# Will open Android studio
-npx cap open android
+```plaintext
+├── .github/
+│   └── workflows/
+├── api/
+├── assets/
+├── frontend/
+├── os/
+├── pdf/
+├── storage/
+├── .gitignore
+├── README.md
+├── app.go
+├── go.mod
+├── icon.go
+├── logo.png
+├── main.go
+├── sqlc.yaml
+└── wails.json
 ```
+
+## Tools and Frameworks
+
+- **Desktop**: Golang, Wails
+- **Mobile**: Capacitor
+- **Frontend**: Angular
+- **UI**: SpartanNG
+
+## Screenshots
+
+### Desktop Interface
+
+![Desktop Interface](./screenshots/list_of_documents.png)
+
+### PDF Report
+
+![PDF Report](./screenshots/test.png)
+
+## Contribution
+
+Feel free to fork this repository and contribute by submitting pull requests. Any contributions, suggestions, or improvements are welcome.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
+---
+
+For more detailed documentation on how to use Wails, please refer to their official documentation:
+
+- [Wails Documentation](https://wails.io/docs/)
