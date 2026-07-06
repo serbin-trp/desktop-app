@@ -10,6 +10,29 @@
       (ngSubmit)="handleSubmit()"
     >
       <div class="items-center grid grid-cols-4 gap-4">
+        <label hlmLabel for="type">Type</label>
+        <select
+          class="col-span-3 flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
+          formControlName="type"
+          id="type"
+        >
+          <option value="person">Person</option>
+          <option value="company">Company</option>
+        </select>
+      </div>
+
+      @if (createClientForm.controls.type.value === 'company') {
+      <div class="items-center grid grid-cols-4 gap-4">
+        <label hlmLabel for="companyName">Company</label>
+        <input
+          class="col-span-3"
+          formControlName="companyName"
+          id="companyName"
+          hlmInput
+        />
+      </div>
+      } @else {
+      <div class="items-center grid grid-cols-4 gap-4">
         <label hlmLabel for="lastName">Last name </label>
         <input
           class="col-span-3"
@@ -37,6 +60,7 @@
           hlmInput
         />
       </div>
+      }
       <hlm-dialog-footer>
         <button hlmBtn type="submit">Create</button>
       </hlm-dialog-footer>

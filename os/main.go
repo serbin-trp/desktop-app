@@ -28,6 +28,14 @@ func GetAppDataPath(appName string) (string, error) {
 		}
 		path = filepath.Join(homeDir, ".local", "share", appName)
 
+	case "darwin":
+		// On macOS, use ~/Library/Application Support
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			return "", fmt.Errorf("unable to get user home directory: %v", err)
+		}
+		path = filepath.Join(homeDir, "Library", "Application Support", appName)
+
 	default:
 		return "", fmt.Errorf("unsupported platform: %s", runtime.GOOS)
 	}

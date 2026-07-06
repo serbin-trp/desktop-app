@@ -6,6 +6,8 @@ export namespace api {
 	    lastName: string;
 	    fathersName: string;
 	    title: string;
+	    type: string;
+	    companyName: string;
 	    ipn: string;
 	    address: string;
 	    account: string;
@@ -22,6 +24,8 @@ export namespace api {
 	        this.lastName = source["lastName"];
 	        this.fathersName = source["fathersName"];
 	        this.title = source["title"];
+	        this.type = source["type"];
+	        this.companyName = source["companyName"];
 	        this.ipn = source["ipn"];
 	        this.address = source["address"];
 	        this.account = source["account"];
@@ -33,6 +37,8 @@ export namespace api {
 	    lastName: string;
 	    fathersName: string;
 	    title: string;
+	    type: string;
+	    companyName: string;
 	    ipn: string;
 	    address: string;
 	    account: string;
@@ -48,6 +54,8 @@ export namespace api {
 	        this.lastName = source["lastName"];
 	        this.fathersName = source["fathersName"];
 	        this.title = source["title"];
+	        this.type = source["type"];
+	        this.companyName = source["companyName"];
 	        this.ipn = source["ipn"];
 	        this.address = source["address"];
 	        this.account = source["account"];
@@ -56,6 +64,7 @@ export namespace api {
 	}
 	export class CreateDocTransaction {
 	    documentId: number;
+	    title: string;
 	    amount: string;
 	
 	    static createFrom(source: any = {}) {
@@ -65,6 +74,7 @@ export namespace api {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.documentId = source["documentId"];
+	        this.title = source["title"];
 	        this.amount = source["amount"];
 	    }
 	}
@@ -89,6 +99,7 @@ export namespace api {
 	export class DocTransaction {
 	    id: number;
 	    documentId: number;
+	    title: string;
 	    amount: string;
 	
 	    static createFrom(source: any = {}) {
@@ -99,6 +110,7 @@ export namespace api {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.id = source["id"];
 	        this.documentId = source["documentId"];
+	        this.title = source["title"];
 	        this.amount = source["amount"];
 	    }
 	}
@@ -148,6 +160,8 @@ export namespace api {
 	    lastName: string;
 	    fathersName: string;
 	    title: string;
+	    type: string;
+	    companyName: string;
 	    ipn: string;
 	    address: string;
 	    account: string;
@@ -164,6 +178,8 @@ export namespace api {
 	        this.lastName = source["lastName"];
 	        this.fathersName = source["fathersName"];
 	        this.title = source["title"];
+	        this.type = source["type"];
+	        this.companyName = source["companyName"];
 	        this.ipn = source["ipn"];
 	        this.address = source["address"];
 	        this.account = source["account"];

@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import htmlTemplate from '@utils/html/template';
 import rowTemplate from '@utils/html/row';
 import juice from 'juice';
-import { IClient } from '@modules/clients/models/client.model';
+import {
+  getClientDisplayTitle,
+  getContractPartyTitle,
+  IClient,
+} from '@modules/clients/models/client.model';
 import { sum } from '@utils/math';
 import { api } from '@wails/models';
-
-const trxTitle = {
-  first: "Комп'ютерне програмування",
-  else: "Додаткове комп'ютерне програмування",
-};
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +19,8 @@ export class PdfService {
       const rows = doc.transactions.map(replaceRow);
       const withValues = htmlTemplate
         .replaceAll('{{docTitle}}', doc.title)
-        .replaceAll('{{executorTitle}}', `ФОП "${doc.executor.title}"`)
-        .replaceAll('{{contractorTitle}}', `ФОП "${doc.contractor.title}"`)
+        .replaceAll('{{executorTitle}}', getContractPartyTitle(doc.executor))
+        .replaceAll('{{contractorTitle}}', getContractPartyTitle(doc.contractor))
         .replaceAll('{{executorIPN}}', doc.executor.ipn)
         .replaceAll('{{contractorIPN}}', doc.contractor.ipn)
         .replaceAll('{{executorAddress}}', doc.executor.address)
@@ -35,10 +34,10 @@ export class PdfService {
         .replaceAll('{{trxAmount}}', doc.transactions.length.toString())
         .replaceAll('{{trxSum}}', trxSum(doc.transactions))
         .replaceAll('{{trxSumWords}}', getTrxText(doc.transactions))
-        .replaceAll('{{executorInitials}}', `/${getInitials(doc.executor)}`)
+        .replaceAll('{{executorInitials}}', `/${getSignatureName(doc.executor)}`)
         .replaceAll(
           '{{contractorInitials}}',
-          `/${getInitials(doc.contractor)}`,
+          `/${getSignatureName(doc.contractor)}`,
         );
 
       resolve(juice(withValues));
@@ -54,7 +53,7 @@ function getTrxText(trxs: api.DocTransaction[]) {
 function replaceRow(trx: api.DocTransaction, i: number) {
   return rowTemplate
     .replaceAll('{{trxIndex}}', (i + 1).toString())
-    .replaceAll('{{trxTitle}}', i === 0 ? trxTitle.first : trxTitle.else)
+    .replaceAll('{{trxTitle}}', trx.title)
     .replaceAll(
       '{{trxAmount}}',
       parseFloat(trx.amount).toFixed(2).replace('.', ','),
@@ -65,7 +64,15 @@ function trxSum(trx: api.DocTransaction[]): string {
   return trx.reduce((v, a) => sum(v, a.amount), '0').replace('.', ',');
 }
 
-function getInitials(c: IClient) {
+function getSignatureName(c: IClient) {
+  if (c.type === 'company') {
+    return getClientDisplayTitle(c);
+  }
+
+  if (!c.firstName || !c.fathersName) {
+    return getClientDisplayTitle(c);
+  }
+
   return `${c.lastName} ${c.firstName[0]}.${c.fathersName[0]}.`;
 }
 

@@ -10,9 +10,9 @@ import (
 )
 
 const createClient = `-- name: CreateClient :one
-INSERT INTO Client (firstName, lastName, fathersName, title, ipn, address, account, phone)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-RETURNING id, firstname, lastname, fathersname, title, ipn, address, account, phone
+INSERT INTO Client (firstName, lastName, fathersName, title, type, companyName, ipn, address, account, phone)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+RETURNING id, firstname, lastname, fathersname, title, type, companyname, ipn, address, account, phone
 `
 
 type CreateClientParams struct {
@@ -20,6 +20,8 @@ type CreateClientParams struct {
 	Lastname    string
 	Fathersname string
 	Title       string
+	Type        string
+	Companyname string
 	Ipn         string
 	Address     string
 	Account     string
@@ -32,6 +34,8 @@ func (q *Queries) CreateClient(ctx context.Context, arg CreateClientParams) (Cli
 		arg.Lastname,
 		arg.Fathersname,
 		arg.Title,
+		arg.Type,
+		arg.Companyname,
 		arg.Ipn,
 		arg.Address,
 		arg.Account,
@@ -44,6 +48,8 @@ func (q *Queries) CreateClient(ctx context.Context, arg CreateClientParams) (Cli
 		&i.Lastname,
 		&i.Fathersname,
 		&i.Title,
+		&i.Type,
+		&i.Companyname,
 		&i.Ipn,
 		&i.Address,
 		&i.Account,
@@ -84,20 +90,21 @@ func (q *Queries) CreateDocument(ctx context.Context, arg CreateDocumentParams) 
 }
 
 const createTransaction = `-- name: CreateTransaction :one
-INSERT INTO DocTransaction (documentId, amount)
-VALUES (?, ?)
-RETURNING id, documentid, amount
+INSERT INTO DocTransaction (documentId, title, amount)
+VALUES (?, ?, ?)
+RETURNING id, documentid, title, amount
 `
 
 type CreateTransactionParams struct {
 	Documentid int64
+	Title      string
 	Amount     string
 }
 
 func (q *Queries) CreateTransaction(ctx context.Context, arg CreateTransactionParams) (DocTransaction, error) {
-	row := q.db.QueryRowContext(ctx, createTransaction, arg.Documentid, arg.Amount)
+	row := q.db.QueryRowContext(ctx, createTransaction, arg.Documentid, arg.Title, arg.Amount)
 	var i DocTransaction
-	err := row.Scan(&i.ID, &i.Documentid, &i.Amount)
+	err := row.Scan(&i.ID, &i.Documentid, &i.Title, &i.Amount)
 	return i, err
 }
 
@@ -131,7 +138,7 @@ func (q *Queries) DeleteTransaction(ctx context.Context, id int64) error {
 }
 
 const getAllClients = `-- name: GetAllClients :many
-SELECT id, firstname, lastname, fathersname, title, ipn, address, account, phone
+SELECT id, firstname, lastname, fathersname, title, type, companyname, ipn, address, account, phone
 FROM Client
 `
 
@@ -150,6 +157,8 @@ func (q *Queries) GetAllClients(ctx context.Context) ([]Client, error) {
 			&i.Lastname,
 			&i.Fathersname,
 			&i.Title,
+			&i.Type,
+			&i.Companyname,
 			&i.Ipn,
 			&i.Address,
 			&i.Account,
@@ -169,7 +178,7 @@ func (q *Queries) GetAllClients(ctx context.Context) ([]Client, error) {
 }
 
 const getClientByID = `-- name: GetClientByID :one
-SELECT id, firstname, lastname, fathersname, title, ipn, address, account, phone
+SELECT id, firstname, lastname, fathersname, title, type, companyname, ipn, address, account, phone
 FROM Client
 WHERE id = ?
 `
@@ -183,6 +192,8 @@ func (q *Queries) GetClientByID(ctx context.Context, id int64) (Client, error) {
 		&i.Lastname,
 		&i.Fathersname,
 		&i.Title,
+		&i.Type,
+		&i.Companyname,
 		&i.Ipn,
 		&i.Address,
 		&i.Account,
@@ -245,7 +256,7 @@ func (q *Queries) GetDocuments(ctx context.Context) ([]Document, error) {
 }
 
 const getTransactionsByDoc = `-- name: GetTransactionsByDoc :many
-SELECT id, documentid, amount
+SELECT id, documentid, title, amount
 FROM DocTransaction
 WHERE documentId = ?
 `
@@ -259,7 +270,7 @@ func (q *Queries) GetTransactionsByDoc(ctx context.Context, documentid int64) ([
 	var items []DocTransaction
 	for rows.Next() {
 		var i DocTransaction
-		if err := rows.Scan(&i.ID, &i.Documentid, &i.Amount); err != nil {
+		if err := rows.Scan(&i.ID, &i.Documentid, &i.Title, &i.Amount); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -275,9 +286,9 @@ func (q *Queries) GetTransactionsByDoc(ctx context.Context, documentid int64) ([
 
 const updateClientByID = `-- name: UpdateClientByID :exec
 UPDATE Client
-SET firstName = ?, lastName = ?, fathersName = ?, title = ?, ipn = ?, address = ?, account = ?, phone = ?
+SET firstName = ?, lastName = ?, fathersName = ?, title = ?, type = ?, companyName = ?, ipn = ?, address = ?, account = ?, phone = ?
 WHERE id = ?
-RETURNING id, firstname, lastname, fathersname, title, ipn, address, account, phone
+RETURNING id, firstname, lastname, fathersname, title, type, companyname, ipn, address, account, phone
 `
 
 type UpdateClientByIDParams struct {
@@ -285,6 +296,8 @@ type UpdateClientByIDParams struct {
 	Lastname    string
 	Fathersname string
 	Title       string
+	Type        string
+	Companyname string
 	Ipn         string
 	Address     string
 	Account     string
@@ -298,6 +311,8 @@ func (q *Queries) UpdateClientByID(ctx context.Context, arg UpdateClientByIDPara
 		arg.Lastname,
 		arg.Fathersname,
 		arg.Title,
+		arg.Type,
+		arg.Companyname,
 		arg.Ipn,
 		arg.Address,
 		arg.Account,

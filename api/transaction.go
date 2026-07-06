@@ -5,11 +5,13 @@ import "app/storage/db"
 type DocTransaction struct {
 	ID         int64  `json:"id"`
 	Documentid int64  `json:"documentId"`
+	Title      string `json:"title"`
 	Amount     string `json:"amount"`
 }
 
 type CreateDocTransaction struct {
 	Documentid int64  `json:"documentId"`
+	Title      string `json:"title"`
 	Amount     string `json:"amount"`
 }
 
@@ -37,6 +39,7 @@ func (a *API) DeleteTransaction(id int64) error {
 func mapTrx(t db.DocTransaction) *DocTransaction {
 	return &DocTransaction{
 		ID:         t.ID,
+		Title:      t.Title,
 		Amount:     t.Amount,
 		Documentid: t.Documentid,
 	}
@@ -45,6 +48,7 @@ func mapTrx(t db.DocTransaction) *DocTransaction {
 func mapCreateTrx(t CreateDocTransaction) *db.CreateTransactionParams {
 	return &db.CreateTransactionParams{
 		Amount:     t.Amount,
+		Title:      t.Title,
 		Documentid: t.Documentid,
 	}
 }

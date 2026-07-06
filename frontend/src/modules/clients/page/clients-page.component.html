@@ -13,7 +13,7 @@
   @if (clients$ | async; as clients) {
   @for (client of clients; track client.id) {
   <hlm-trow [brnCtxMenuTriggerFor]="menu">
-    <hlm-td class="flex-1">{{ client.title }}</hlm-td>
+    <hlm-td class="flex-1">{{ getClientDisplayTitle(client) }}</hlm-td>
     <hlm-td class="flex-1">{{ client.phone }}</hlm-td>
     <hlm-td class="flex-1">{{ client.address }}</hlm-td>
     <hlm-td class="justify-end">
@@ -29,7 +29,7 @@
               <hlm-icon name="lucideUser" hlmMenuIcon />
               <span>Edit</span>
             </a>
-            <button hlmMenuItem (click)="copyToClipboard(client.title)">
+            <button hlmMenuItem (click)="copyToClipboard(getClientDisplayTitle(client))">
               <hlm-icon name="lucideFile" hlmMenuIcon></hlm-icon>
               <span>Copy Name</span>
             </button>

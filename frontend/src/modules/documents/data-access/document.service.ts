@@ -48,7 +48,11 @@ export class DocumentService {
       };
       const id = await CreateDocument(params);
       const promises = document.transactions.map((t) =>
-        CreateTransaction({ documentId: id, amount: t }),
+        CreateTransaction({
+          documentId: id,
+          title: t.title,
+          amount: t.amount.toString(),
+        }),
       );
 
       await Promise.all(promises);

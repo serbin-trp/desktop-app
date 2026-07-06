@@ -18,8 +18,8 @@ DELETE FROM Document
 WHERE id = ?;
 
 -- name: CreateClient :one
-INSERT INTO Client (firstName, lastName, fathersName, title, ipn, address, account, phone)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+INSERT INTO Client (firstName, lastName, fathersName, title, type, companyName, ipn, address, account, phone)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 RETURNING *;
 
 
@@ -34,7 +34,7 @@ WHERE id = ?;
 
 -- name: UpdateClientByID :exec
 UPDATE Client
-SET firstName = ?, lastName = ?, fathersName = ?, title = ?, ipn = ?, address = ?, account = ?, phone = ?
+SET firstName = ?, lastName = ?, fathersName = ?, title = ?, type = ?, companyName = ?, ipn = ?, address = ?, account = ?, phone = ?
 WHERE id = ?
 RETURNING *;
 
@@ -42,8 +42,8 @@ RETURNING *;
 DELETE FROM Client WHERE id = ?;
 
 -- name: CreateTransaction :one
-INSERT INTO DocTransaction (documentId, amount)
-VALUES (?, ?)
+INSERT INTO DocTransaction (documentId, title, amount)
+VALUES (?, ?, ?)
 RETURNING *;
 
 -- name: DeleteTransaction :exec

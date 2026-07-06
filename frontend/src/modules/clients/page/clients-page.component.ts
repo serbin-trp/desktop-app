@@ -37,7 +37,7 @@ import {
   lucidePlus,
 } from '@ng-icons/lucide';
 import { toast } from 'ngx-sonner';
-import { IClient } from '../models/client.model';
+import { getClientDisplayTitle, IClient } from '../models/client.model';
 
 @Component({
   standalone: true,
@@ -82,6 +82,7 @@ import { IClient } from '../models/client.model';
   ],
 })
 export class ClientsPageComponent {
+  getClientDisplayTitle = getClientDisplayTitle;
   isModalOpen = signal(false);
   handleModalClick = () => this.isModalOpen.update((v) => !v);
   clientService = inject(ClientsService);

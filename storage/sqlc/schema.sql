@@ -4,6 +4,8 @@ CREATE TABLE IF NOT EXISTS Client (
     lastName TEXT NOT NULL,
     fathersName TEXT NOT NULL,
     title TEXT NOT NULL,
+    type TEXT NOT NULL DEFAULT 'person',
+    companyName TEXT NOT NULL DEFAULT '',
     ipn TEXT NOT NULL,
     address TEXT NOT NULL,
     account TEXT NOT NULL,
@@ -23,6 +25,7 @@ CREATE TABLE IF NOT EXISTS Document (
 CREATE TABLE IF NOT EXISTS DocTransaction (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     documentId INTEGER NOT NULL,
+    title TEXT NOT NULL DEFAULT 'Комп''ютерне програмування',
     amount TEXT NOT NULL,
     FOREIGN KEY (documentId) REFERENCES Document(id)
 );

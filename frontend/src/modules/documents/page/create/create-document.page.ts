@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { api } from '@wails/models';
+import { getClientDisplayTitle } from '@modules/clients/models/client.model';
 
 @Component({
   standalone: true,
@@ -41,6 +42,7 @@ import { api } from '@wails/models';
   encapsulation: ViewEncapsulation.None,
 })
 export class CreateDocumentPageComponent {
+  getClientDisplayTitle = getClientDisplayTitle;
   h2 = hlmH2;
   private fb = inject(FormBuilder);
   private router = inject(Router);
@@ -53,7 +55,12 @@ export class CreateDocumentPageComponent {
     title: '',
     executor: null,
     contractor: null,
-    transactions: this.fb.array([this.fb.control(0)]),
+    transactions: this.fb.array([
+      this.fb.group({
+        title: "Комп'ютерне програмування",
+        amount: 0,
+      }),
+    ]),
   });
 
   get transactions() {
@@ -61,7 +68,18 @@ export class CreateDocumentPageComponent {
   }
 
   addTransaction() {
-    this.transactions.push(this.fb.control(0));
+    this.transactions.push(
+      this.fb.group({
+        title: '',
+        amount: 0,
+      }),
+    );
+  }
+
+  removeTransaction(index: number) {
+    if (this.transactions.length > 1) {
+      this.transactions.removeAt(index);
+    }
   }
 
   clients: api.Client[] = [];

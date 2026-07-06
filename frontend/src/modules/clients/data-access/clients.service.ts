@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CreateClientDTO, EditClientDTO } from '../models/client.model';
+import {
+  buildClientTitle,
+  CreateClientDTO,
+  EditClientDTO,
+} from '../models/client.model';
 import {
   DeleteClient,
   GetAllClients,
@@ -15,17 +19,25 @@ import { api } from '@wails/models';
 })
 export class ClientsService {
   async create(createClientDTO: CreateClientDTO) {
-    const title = `${createClientDTO.lastName} ${createClientDTO.firstName} ${createClientDTO.fathersName}`;
+    const title = buildClientTitle(createClientDTO);
     const payload = api.CreateClientParams.createFrom({
       ...createClientDTO,
       title,
+      type: createClientDTO.type || 'person',
+      companyName: createClientDTO.companyName || '',
     });
     await NewClient(payload);
   }
 
   async update(id: number, payload: EditClientDTO) {
     const data: api.UpdateClientByIDParams =
-      api.UpdateClientByIDParams.createFrom({ id, ...payload });
+      api.UpdateClientByIDParams.createFrom({
+        id,
+        ...payload,
+        title: buildClientTitle(payload),
+        type: payload.type || 'person',
+        companyName: payload.companyName || '',
+      });
     await UpdateClient(data);
   }
 

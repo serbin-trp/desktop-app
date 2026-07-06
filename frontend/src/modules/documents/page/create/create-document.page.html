@@ -7,7 +7,7 @@
       </hlm-select-trigger>
       <hlm-select-content>
         @for(option of clients; track option.id) {
-        <hlm-option [value]="option">{{option.title}}</hlm-option>
+        <hlm-option [value]="option">{{ getClientDisplayTitle(option) }}</hlm-option>
         }
       </hlm-select-content>
     </brn-select>
@@ -21,7 +21,7 @@
       </hlm-select-trigger>
       <hlm-select-content>
         @for(option of clients; track option.id) {
-        <hlm-option [value]="option">{{option.title}}</hlm-option>
+        <hlm-option [value]="option">{{ getClientDisplayTitle(option) }}</hlm-option>
         }
       </hlm-select-content>
     </brn-select>
@@ -47,9 +47,21 @@
       + Add another transaction
     </button>
     @for(trx of transactions.controls; track trx) {}
-    <div class="mt-2 items-center grid grid-cols-4 gap-4" *ngFor="let trx of transactions.controls; let i=index">
-      <label hlmLabel for="trx-{{ i }}">Transaction:</label>
-      <input type="number" class="col-span-3" hlmInput id="trx-{{ i }}" type="text" [formControlName]="i" />
+    <div
+      class="mt-2 items-center grid grid-cols-4 gap-4"
+      *ngFor="let trx of transactions.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <label hlmLabel for="trx-title-{{ i }}">Job title</label>
+      <input class="col-span-3" hlmInput id="trx-title-{{ i }}" formControlName="title" />
+
+      <label hlmLabel for="trx-amount-{{ i }}">Amount</label>
+      <div class="col-span-3 flex gap-2">
+        <input class="flex-1" hlmInput id="trx-amount-{{ i }}" type="number" formControlName="amount" />
+        <button hlmBtn type="button" variant="outline" (click)="removeTransaction(i)">
+          Remove
+        </button>
+      </div>
     </div>
   </div>
   <button hlmBtn type="submit">Create</button>

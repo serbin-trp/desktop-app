@@ -33,6 +33,8 @@ export class EditClientPageComponent {
   client = signal<IClient | null>(null);
   private fb = inject(FormBuilder);
   clientForm: FormGroup = this.fb.group({
+    type: ['person'],
+    companyName: [''],
     firstName: [''],
     lastName: [''],
     fathersName: [''],
@@ -59,6 +61,8 @@ export class EditClientPageComponent {
       firstName: client.firstName,
       lastName: client.lastName,
       fathersName: client.fathersName,
+      type: client.type || 'person',
+      companyName: client.companyName || '',
       title: client.title,
       ipn: client.ipn,
       account: client.account,

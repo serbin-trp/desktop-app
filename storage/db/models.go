@@ -10,6 +10,8 @@ type Client struct {
 	Lastname    string
 	Fathersname string
 	Title       string
+	Type        string
+	Companyname string
 	Ipn         string
 	Address     string
 	Account     string
@@ -19,6 +21,7 @@ type Client struct {
 type DocTransaction struct {
 	ID         int64
 	Documentid int64
+	Title      string
 	Amount     string
 }
 

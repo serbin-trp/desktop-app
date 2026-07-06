@@ -6,7 +6,7 @@ export interface IDocument {
   contractor: IClient;
   date: string;
   title: string;
-  transactions: string[];
+  transactions: DocumentTransactionDTO[];
 }
 
 export interface CreateDocumentDTO {
@@ -14,5 +14,10 @@ export interface CreateDocumentDTO {
   contractor: IClient;
   date: string | Date;
   title: string;
-  transactions: string[];
+  transactions: DocumentTransactionDTO[];
+}
+
+export interface DocumentTransactionDTO {
+  title: string;
+  amount: string;
 }

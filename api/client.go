@@ -8,6 +8,8 @@ type Client struct {
 	Lastname    string `json:"lastName"`
 	Fathersname string `json:"fathersName"`
 	Title       string `json:"title"`
+	Type        string `json:"type"`
+	Companyname string `json:"companyName"`
 	Ipn         string `json:"ipn"`
 	Address     string `json:"address"`
 	Account     string `json:"account"`
@@ -19,6 +21,8 @@ type CreateClientParams struct {
 	Lastname    string `json:"lastName"`
 	Fathersname string `json:"fathersName"`
 	Title       string `json:"title"`
+	Type        string `json:"type"`
+	Companyname string `json:"companyName"`
 	Ipn         string `json:"ipn"`
 	Address     string `json:"address"`
 	Account     string `json:"account"`
@@ -31,6 +35,8 @@ type UpdateClientByIDParams struct {
 	Lastname    string `json:"lastName"`
 	Fathersname string `json:"fathersName"`
 	Title       string `json:"title"`
+	Type        string `json:"type"`
+	Companyname string `json:"companyName"`
 	Ipn         string `json:"ipn"`
 	Address     string `json:"address"`
 	Account     string `json:"account"`
@@ -42,6 +48,8 @@ func mapClient(c db.Client) *Client {
 		ID:          c.ID,
 		Ipn:         c.Ipn,
 		Title:       c.Title,
+		Type:        c.Type,
+		Companyname: c.Companyname,
 		Phone:       c.Phone,
 		Address:     c.Address,
 		Account:     c.Account,
@@ -55,6 +63,8 @@ func mapCreateClientParams(c CreateClientParams) *db.CreateClientParams {
 	return &db.CreateClientParams{
 		Ipn:         c.Ipn,
 		Title:       c.Title,
+		Type:        c.Type,
+		Companyname: c.Companyname,
 		Phone:       c.Phone,
 		Address:     c.Address,
 		Account:     c.Account,
@@ -69,6 +79,8 @@ func mapUpdateClientByID(c UpdateClientByIDParams) *db.UpdateClientByIDParams {
 		ID:          c.ID,
 		Ipn:         c.Ipn,
 		Title:       c.Title,
+		Type:        c.Type,
+		Companyname: c.Companyname,
 		Phone:       c.Phone,
 		Address:     c.Address,
 		Account:     c.Account,

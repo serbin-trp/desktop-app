@@ -2,6 +2,24 @@
 <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="py-4 grid gap-4">
   <h1 [class]="h2">Edit client</h1>
   <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="type">Type</label>
+    <select
+      class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
+      formControlName="type"
+      id="type"
+    >
+      <option value="person">Person</option>
+      <option value="company">Company</option>
+    </select>
+  </div>
+
+  @if (clientForm.controls['type'].value === 'company') {
+  <div class="items-center grid grid-cols-4 gap-4">
+    <label hlmLabel for="companyName">Company</label>
+    <input hlmInput formControlName="companyName" />
+  </div>
+  } @else {
+  <div class="items-center grid grid-cols-4 gap-4">
     <label hlmLabel for="lastName">Last name </label>
     <input hlmInput formControlName="lastName" />
   </div>
@@ -13,12 +31,9 @@
     <label hlmLabel for="fathersName">Father's name </label>
     <input hlmInput formControlName="fathersName" />
   </div>
+  }
 
   <h2 [class]="h3">Clients details</h2>
-  <div class="items-center grid grid-cols-4 gap-4">
-    <label hlmLabel for="title">Title</label>
-    <input hlmInput formControlName="title" />
-  </div>
   <div class="items-center grid grid-cols-4 gap-4">
     <label hlmLabel for="ipn">IPN</label>
     <input hlmInput formControlName="ipn" />

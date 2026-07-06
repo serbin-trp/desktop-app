@@ -51,6 +51,8 @@ export class CreateClientModal {
   private fb = inject(FormBuilder);
 
   createClientForm = this.fb.nonNullable.group({
+    type: ['person'],
+    companyName: [''],
     firstName: [''],
     lastName: [''],
     fathersName: [''],
