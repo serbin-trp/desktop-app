@@ -39,10 +39,8 @@ jobs:
           submodules: recursive
 
       - name: Build wails
-        uses: host-uk/build@v4.0.0
+        uses: host-uk/build/actions/build/wails2@v4.0.0
         id: build
-        env:
-          WAILS_NSIS: ${{ matrix.build.nsis }}
         with:
           build-name: ${{ matrix.build.name }}
           build-platform: ${{ matrix.build.platform }}
@@ -50,6 +48,7 @@ jobs:
           package: false
           go-version: "1.22"
           node-version: "20.12.2"
+          nsis: ${{ matrix.build.nsis }}
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
