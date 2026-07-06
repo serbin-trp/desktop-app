@@ -18,9 +18,6 @@ jobs:
       matrix:
         build:
           - name: "trg"
-            platform: "linux/amd64"
-            os: "ubuntu-latest"
-          - name: "trg"
             platform: "windows/amd64"
             os: "windows-latest"
           - name: "trg"

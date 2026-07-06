@@ -604,8 +604,9 @@ export default `<!doctype html>
               <font size="2" style="font-size: 10pt"
                 ><span lang="uk-UA"
                   >Ми, що нижче підписалися, представник Виконавця і представник
-                  Замовника, уклали цей акт про те, що Виконавець виконав роботи
-                  з ком’ютерного програмування від {{docDate}} р.
+                  Замовника, уклали цей акт про те, що Виконавець виконав
+                  роботи (надав послуги): «{{primaryJobTitle}}» від
+                  {{docDate}} р.
                 </span></font
               >
             </p>
@@ -1305,7 +1306,7 @@ export default `<!doctype html>
               style="orphans: 2; widows: 2; text-indent: 0in"
             >
               <font size="2" style="font-size: 10pt"
-                ><span lang="uk-UA">ФОП:</span></font
+                ><span lang="uk-UA">{{executorSignatureLabel}}</span></font
               >
             </p>
           </td>
@@ -1347,7 +1348,7 @@ export default `<!doctype html>
               style="orphans: 2; widows: 2; text-indent: 0in"
             >
               <font size="2" style="font-size: 10pt"
-                ><span lang="uk-UA">ФОП:</span></font
+                ><span lang="uk-UA">{{contractorSignatureLabel}}</span></font
               >
             </p>
           </td>

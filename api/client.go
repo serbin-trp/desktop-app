@@ -3,90 +3,96 @@ package api
 import "app/storage/db"
 
 type Client struct {
-	ID          int64  `json:"id"`
-	Firstname   string `json:"firstName"`
-	Lastname    string `json:"lastName"`
-	Fathersname string `json:"fathersName"`
-	Title       string `json:"title"`
-	Type        string `json:"type"`
-	Companyname string `json:"companyName"`
-	Ipn         string `json:"ipn"`
-	Address     string `json:"address"`
-	Account     string `json:"account"`
-	Phone       string `json:"phone"`
+	ID                 int64  `json:"id"`
+	Firstname          string `json:"firstName"`
+	Lastname           string `json:"lastName"`
+	Fathersname        string `json:"fathersName"`
+	Title              string `json:"title"`
+	Type               string `json:"type"`
+	Companyname        string `json:"companyName"`
+	Representativename string `json:"representativeName"`
+	Ipn                string `json:"ipn"`
+	Address            string `json:"address"`
+	Account            string `json:"account"`
+	Phone              string `json:"phone"`
 }
 
 type CreateClientParams struct {
-	Firstname   string `json:"firstName"`
-	Lastname    string `json:"lastName"`
-	Fathersname string `json:"fathersName"`
-	Title       string `json:"title"`
-	Type        string `json:"type"`
-	Companyname string `json:"companyName"`
-	Ipn         string `json:"ipn"`
-	Address     string `json:"address"`
-	Account     string `json:"account"`
-	Phone       string `json:"phone"`
+	Firstname          string `json:"firstName"`
+	Lastname           string `json:"lastName"`
+	Fathersname        string `json:"fathersName"`
+	Title              string `json:"title"`
+	Type               string `json:"type"`
+	Companyname        string `json:"companyName"`
+	Representativename string `json:"representativeName"`
+	Ipn                string `json:"ipn"`
+	Address            string `json:"address"`
+	Account            string `json:"account"`
+	Phone              string `json:"phone"`
 }
 
 type UpdateClientByIDParams struct {
-	ID          int64  `json:"id"`
-	Firstname   string `json:"firstName"`
-	Lastname    string `json:"lastName"`
-	Fathersname string `json:"fathersName"`
-	Title       string `json:"title"`
-	Type        string `json:"type"`
-	Companyname string `json:"companyName"`
-	Ipn         string `json:"ipn"`
-	Address     string `json:"address"`
-	Account     string `json:"account"`
-	Phone       string `json:"phone"`
+	ID                 int64  `json:"id"`
+	Firstname          string `json:"firstName"`
+	Lastname           string `json:"lastName"`
+	Fathersname        string `json:"fathersName"`
+	Title              string `json:"title"`
+	Type               string `json:"type"`
+	Companyname        string `json:"companyName"`
+	Representativename string `json:"representativeName"`
+	Ipn                string `json:"ipn"`
+	Address            string `json:"address"`
+	Account            string `json:"account"`
+	Phone              string `json:"phone"`
 }
 
 func mapClient(c db.Client) *Client {
 	return &Client{
-		ID:          c.ID,
-		Ipn:         c.Ipn,
-		Title:       c.Title,
-		Type:        c.Type,
-		Companyname: c.Companyname,
-		Phone:       c.Phone,
-		Address:     c.Address,
-		Account:     c.Account,
-		Lastname:    c.Lastname,
-		Firstname:   c.Firstname,
-		Fathersname: c.Fathersname,
+		ID:                 c.ID,
+		Ipn:                c.Ipn,
+		Title:              c.Title,
+		Type:               c.Type,
+		Companyname:        c.Companyname,
+		Representativename: c.Representativename,
+		Phone:              c.Phone,
+		Address:            c.Address,
+		Account:            c.Account,
+		Lastname:           c.Lastname,
+		Firstname:          c.Firstname,
+		Fathersname:        c.Fathersname,
 	}
 }
 
 func mapCreateClientParams(c CreateClientParams) *db.CreateClientParams {
 	return &db.CreateClientParams{
-		Ipn:         c.Ipn,
-		Title:       c.Title,
-		Type:        c.Type,
-		Companyname: c.Companyname,
-		Phone:       c.Phone,
-		Address:     c.Address,
-		Account:     c.Account,
-		Lastname:    c.Lastname,
-		Firstname:   c.Firstname,
-		Fathersname: c.Fathersname,
+		Ipn:                c.Ipn,
+		Title:              c.Title,
+		Type:               c.Type,
+		Companyname:        c.Companyname,
+		Representativename: c.Representativename,
+		Phone:              c.Phone,
+		Address:            c.Address,
+		Account:            c.Account,
+		Lastname:           c.Lastname,
+		Firstname:          c.Firstname,
+		Fathersname:        c.Fathersname,
 	}
 }
 
 func mapUpdateClientByID(c UpdateClientByIDParams) *db.UpdateClientByIDParams {
 	return &db.UpdateClientByIDParams{
-		ID:          c.ID,
-		Ipn:         c.Ipn,
-		Title:       c.Title,
-		Type:        c.Type,
-		Companyname: c.Companyname,
-		Phone:       c.Phone,
-		Address:     c.Address,
-		Account:     c.Account,
-		Lastname:    c.Lastname,
-		Firstname:   c.Firstname,
-		Fathersname: c.Fathersname,
+		ID:                 c.ID,
+		Ipn:                c.Ipn,
+		Title:              c.Title,
+		Type:               c.Type,
+		Companyname:        c.Companyname,
+		Representativename: c.Representativename,
+		Phone:              c.Phone,
+		Address:            c.Address,
+		Account:            c.Account,
+		Lastname:           c.Lastname,
+		Firstname:          c.Firstname,
+		Fathersname:        c.Fathersname,
 	}
 }
 

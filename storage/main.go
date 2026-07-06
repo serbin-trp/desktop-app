@@ -42,6 +42,7 @@ func InitDB() (*qr.Queries, *sql.DB, error) {
 	migrations := []string{
 		"ALTER TABLE Client ADD COLUMN type TEXT NOT NULL DEFAULT 'person'",
 		"ALTER TABLE Client ADD COLUMN companyName TEXT NOT NULL DEFAULT ''",
+		"ALTER TABLE Client ADD COLUMN representativeName TEXT NOT NULL DEFAULT ''",
 		"ALTER TABLE DocTransaction ADD COLUMN title TEXT NOT NULL DEFAULT 'Комп''ютерне програмування'",
 	}
 	for _, migration := range migrations {

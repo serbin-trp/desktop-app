@@ -10,22 +10,23 @@ import (
 )
 
 const createClient = `-- name: CreateClient :one
-INSERT INTO Client (firstName, lastName, fathersName, title, type, companyName, ipn, address, account, phone)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-RETURNING id, firstname, lastname, fathersname, title, type, companyname, ipn, address, account, phone
+INSERT INTO Client (firstName, lastName, fathersName, title, type, companyName, representativeName, ipn, address, account, phone)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+RETURNING id, firstname, lastname, fathersname, title, type, companyname, representativename, ipn, address, account, phone
 `
 
 type CreateClientParams struct {
-	Firstname   string
-	Lastname    string
-	Fathersname string
-	Title       string
-	Type        string
-	Companyname string
-	Ipn         string
-	Address     string
-	Account     string
-	Phone       string
+	Firstname          string
+	Lastname           string
+	Fathersname        string
+	Title              string
+	Type               string
+	Companyname        string
+	Representativename string
+	Ipn                string
+	Address            string
+	Account            string
+	Phone              string
 }
 
 func (q *Queries) CreateClient(ctx context.Context, arg CreateClientParams) (Client, error) {
@@ -36,6 +37,7 @@ func (q *Queries) CreateClient(ctx context.Context, arg CreateClientParams) (Cli
 		arg.Title,
 		arg.Type,
 		arg.Companyname,
+		arg.Representativename,
 		arg.Ipn,
 		arg.Address,
 		arg.Account,
@@ -50,6 +52,7 @@ func (q *Queries) CreateClient(ctx context.Context, arg CreateClientParams) (Cli
 		&i.Title,
 		&i.Type,
 		&i.Companyname,
+		&i.Representativename,
 		&i.Ipn,
 		&i.Address,
 		&i.Account,
@@ -138,7 +141,7 @@ func (q *Queries) DeleteTransaction(ctx context.Context, id int64) error {
 }
 
 const getAllClients = `-- name: GetAllClients :many
-SELECT id, firstname, lastname, fathersname, title, type, companyname, ipn, address, account, phone
+SELECT id, firstname, lastname, fathersname, title, type, companyname, representativename, ipn, address, account, phone
 FROM Client
 `
 
@@ -159,6 +162,7 @@ func (q *Queries) GetAllClients(ctx context.Context) ([]Client, error) {
 			&i.Title,
 			&i.Type,
 			&i.Companyname,
+			&i.Representativename,
 			&i.Ipn,
 			&i.Address,
 			&i.Account,
@@ -178,7 +182,7 @@ func (q *Queries) GetAllClients(ctx context.Context) ([]Client, error) {
 }
 
 const getClientByID = `-- name: GetClientByID :one
-SELECT id, firstname, lastname, fathersname, title, type, companyname, ipn, address, account, phone
+SELECT id, firstname, lastname, fathersname, title, type, companyname, representativename, ipn, address, account, phone
 FROM Client
 WHERE id = ?
 `
@@ -194,6 +198,7 @@ func (q *Queries) GetClientByID(ctx context.Context, id int64) (Client, error) {
 		&i.Title,
 		&i.Type,
 		&i.Companyname,
+		&i.Representativename,
 		&i.Ipn,
 		&i.Address,
 		&i.Account,
@@ -286,23 +291,24 @@ func (q *Queries) GetTransactionsByDoc(ctx context.Context, documentid int64) ([
 
 const updateClientByID = `-- name: UpdateClientByID :exec
 UPDATE Client
-SET firstName = ?, lastName = ?, fathersName = ?, title = ?, type = ?, companyName = ?, ipn = ?, address = ?, account = ?, phone = ?
+SET firstName = ?, lastName = ?, fathersName = ?, title = ?, type = ?, companyName = ?, representativeName = ?, ipn = ?, address = ?, account = ?, phone = ?
 WHERE id = ?
-RETURNING id, firstname, lastname, fathersname, title, type, companyname, ipn, address, account, phone
+RETURNING id, firstname, lastname, fathersname, title, type, companyname, representativename, ipn, address, account, phone
 `
 
 type UpdateClientByIDParams struct {
-	Firstname   string
-	Lastname    string
-	Fathersname string
-	Title       string
-	Type        string
-	Companyname string
-	Ipn         string
-	Address     string
-	Account     string
-	Phone       string
-	ID          int64
+	Firstname          string
+	Lastname           string
+	Fathersname        string
+	Title              string
+	Type               string
+	Companyname        string
+	Representativename string
+	Ipn                string
+	Address            string
+	Account            string
+	Phone              string
+	ID                 int64
 }
 
 func (q *Queries) UpdateClientByID(ctx context.Context, arg UpdateClientByIDParams) error {
@@ -313,6 +319,7 @@ func (q *Queries) UpdateClientByID(ctx context.Context, arg UpdateClientByIDPara
 		arg.Title,
 		arg.Type,
 		arg.Companyname,
+		arg.Representativename,
 		arg.Ipn,
 		arg.Address,
 		arg.Account,

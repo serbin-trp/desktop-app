@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS Client (
     title TEXT NOT NULL,
     type TEXT NOT NULL DEFAULT 'person',
     companyName TEXT NOT NULL DEFAULT '',
+    representativeName TEXT NOT NULL DEFAULT '',
     ipn TEXT NOT NULL,
     address TEXT NOT NULL,
     account TEXT NOT NULL,

@@ -30,14 +30,20 @@ export class PdfService {
         .replaceAll('{{executorPhone}}', doc.executor.phone)
         .replaceAll('{{contractorPhone}}', doc.contractor.phone)
         .replaceAll('{{docDate}}', doc.date)
+        .replaceAll('{{primaryJobTitle}}', getPrimaryJobTitle(doc))
         .replaceAll('<section id="replaceWithTRX"></section>', rows.join(''))
         .replaceAll('{{trxAmount}}', doc.transactions.length.toString())
         .replaceAll('{{trxSum}}', trxSum(doc.transactions))
         .replaceAll('{{trxSumWords}}', getTrxText(doc.transactions))
         .replaceAll('{{executorInitials}}', `/${getSignatureName(doc.executor)}`)
+        .replaceAll('{{executorSignatureLabel}}', getSignatureLabel(doc.executor))
         .replaceAll(
           '{{contractorInitials}}',
           `/${getSignatureName(doc.contractor)}`,
+        )
+        .replaceAll(
+          '{{contractorSignatureLabel}}',
+          getSignatureLabel(doc.contractor),
         );
 
       resolve(juice(withValues));
@@ -60,13 +66,17 @@ function replaceRow(trx: api.DocTransaction, i: number) {
     );
 }
 
+function getPrimaryJobTitle(doc: api.Document): string {
+  return doc.transactions[0]?.title || 'надані послуги';
+}
+
 function trxSum(trx: api.DocTransaction[]): string {
   return trx.reduce((v, a) => sum(v, a.amount), '0').replace('.', ',');
 }
 
 function getSignatureName(c: IClient) {
   if (c.type === 'company') {
-    return getClientDisplayTitle(c);
+    return c.representativeName || getClientDisplayTitle(c);
   }
 
   if (!c.firstName || !c.fathersName) {
@@ -74,6 +84,10 @@ function getSignatureName(c: IClient) {
   }
 
   return `${c.lastName} ${c.firstName[0]}.${c.fathersName[0]}.`;
+}
+
+function getSignatureLabel(c: IClient) {
+  return c.type === 'company' ? 'Представник:' : 'ФОП:';
 }
 
 function numberToUkrainianText(number: number): string {

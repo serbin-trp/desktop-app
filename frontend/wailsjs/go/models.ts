@@ -8,6 +8,7 @@ export namespace api {
 	    title: string;
 	    type: string;
 	    companyName: string;
+	    representativeName: string;
 	    ipn: string;
 	    address: string;
 	    account: string;
@@ -26,6 +27,7 @@ export namespace api {
 	        this.title = source["title"];
 	        this.type = source["type"];
 	        this.companyName = source["companyName"];
+	        this.representativeName = source["representativeName"];
 	        this.ipn = source["ipn"];
 	        this.address = source["address"];
 	        this.account = source["account"];
@@ -39,6 +41,7 @@ export namespace api {
 	    title: string;
 	    type: string;
 	    companyName: string;
+	    representativeName: string;
 	    ipn: string;
 	    address: string;
 	    account: string;
@@ -56,6 +59,7 @@ export namespace api {
 	        this.title = source["title"];
 	        this.type = source["type"];
 	        this.companyName = source["companyName"];
+	        this.representativeName = source["representativeName"];
 	        this.ipn = source["ipn"];
 	        this.address = source["address"];
 	        this.account = source["account"];
@@ -162,6 +166,7 @@ export namespace api {
 	    title: string;
 	    type: string;
 	    companyName: string;
+	    representativeName: string;
 	    ipn: string;
 	    address: string;
 	    account: string;
@@ -180,6 +185,7 @@ export namespace api {
 	        this.title = source["title"];
 	        this.type = source["type"];
 	        this.companyName = source["companyName"];
+	        this.representativeName = source["representativeName"];
 	        this.ipn = source["ipn"];
 	        this.address = source["address"];
 	        this.account = source["account"];

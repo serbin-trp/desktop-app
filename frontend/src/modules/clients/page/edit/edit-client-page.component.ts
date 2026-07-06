@@ -35,6 +35,7 @@ export class EditClientPageComponent {
   clientForm: FormGroup = this.fb.group({
     type: ['person'],
     companyName: [''],
+    representativeName: [''],
     firstName: [''],
     lastName: [''],
     fathersName: [''],
@@ -63,6 +64,7 @@ export class EditClientPageComponent {
       fathersName: client.fathersName,
       type: client.type || 'person',
       companyName: client.companyName || '',
+      representativeName: client.representativeName || '',
       title: client.title,
       ipn: client.ipn,
       account: client.account,

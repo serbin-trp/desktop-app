@@ -25,6 +25,7 @@ export class ClientsService {
       title,
       type: createClientDTO.type || 'person',
       companyName: createClientDTO.companyName || '',
+      representativeName: createClientDTO.representativeName || '',
     });
     await NewClient(payload);
   }
@@ -37,6 +38,7 @@ export class ClientsService {
         title: buildClientTitle(payload),
         type: payload.type || 'person',
         companyName: payload.companyName || '',
+        representativeName: payload.representativeName || '',
       });
     await UpdateClient(data);
   }

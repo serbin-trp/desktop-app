@@ -5,17 +5,18 @@
 package db
 
 type Client struct {
-	ID          int64
-	Firstname   string
-	Lastname    string
-	Fathersname string
-	Title       string
-	Type        string
-	Companyname string
-	Ipn         string
-	Address     string
-	Account     string
-	Phone       string
+	ID                 int64
+	Firstname          string
+	Lastname           string
+	Fathersname        string
+	Title              string
+	Type               string
+	Companyname        string
+	Representativename string
+	Ipn                string
+	Address            string
+	Account            string
+	Phone              string
 }
 
 type DocTransaction struct {

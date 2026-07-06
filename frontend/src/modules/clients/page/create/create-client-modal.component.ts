@@ -53,6 +53,7 @@ export class CreateClientModal {
   createClientForm = this.fb.nonNullable.group({
     type: ['person'],
     companyName: [''],
+    representativeName: [''],
     firstName: [''],
     lastName: [''],
     fathersName: [''],
