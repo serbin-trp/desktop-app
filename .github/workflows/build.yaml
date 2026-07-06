@@ -66,10 +66,34 @@ jobs:
         with:
           path: release-assets
 
+      - name: Prepare release assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+
+          while IFS= read -r -d '' file; do
+            artifact_name=$(printf '%s' "$file" | cut -d/ -f2)
+            base_name=$(basename "$file")
+
+            case "$artifact_name:$base_name" in
+              trg-windows-amd64:*.exe)
+                cp "$file" "dist/trg-windows-amd64.exe"
+                ;;
+              trg-windows-amd64:trg)
+                cp "$file" "dist/trg-windows-amd64.exe"
+                ;;
+              trg-macos-universal:*.zip|trg-macos-universal:*.pkg)
+                cp "$file" "dist/$base_name"
+                ;;
+            esac
+          done < <(find release-assets -type f -print0)
+
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
-          files: release-assets/**/*
+          files: dist/*
+          overwrite_files: true
           fail_on_unmatched_files: true
